@@ -1,0 +1,77 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
+
+version: "3.4"
+
+services:
+  userms:
+    image: userms
+    build:
+      context: .
+      dockerfile: UserMs/UserMs/Dockerfile
+      args:
+        - configuration=Debug
+    ports:
+      - 18081:18081
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+
+  orderms:
+    image: orderms
+    build:
+      context: .
+      dockerfile: OrderMs/OrderMs/Dockerfile
+      args:
+        - configuration=Debug
+    ports:
+      - 18082:18082
+    environment:
+  
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+  
+  providerms:
+    image: providerms
+    build:
+      context: .
+      dockerfile: ProviderMs/ProviderMs/Dockerfile
+      args:
+        - configuration=Debug
+    ports:
+      - 18083:18083
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+
+  authenticationms:
+    image: authenticationms
+    build:
+      context: .
+      dockerfile: AuthenticationMs/AuthenticationMs/Dockerfile
+      args:
+        - configuration=Debug
+    ports:
+      - 18084:18084
+    environment:
+  
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+  
+  jobms:
+    image: jobms
+    build:
+      context: .
+      dockerfile: JobMs/JobMs/Dockerfile
+      args:
+        - configuration=Debug
+    ports:
+      - 18085:18085
+    environment:
+  
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
