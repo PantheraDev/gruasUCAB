@@ -6,4 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.10.0" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UserMs.Domain\UserMs.Domain.csproj" />
+    <ProjectReference Include="..\UserMs.Core\UserMs.Core.csproj" />
+    <ProjectReference Include="..\UserMs.Infrastructure\UserMs.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
