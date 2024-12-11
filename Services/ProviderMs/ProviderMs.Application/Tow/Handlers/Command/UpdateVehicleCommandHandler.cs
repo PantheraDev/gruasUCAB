@@ -53,9 +53,9 @@ namespace ProviderMs.Application.Command
                 {
                     oldTow = Tow.Update(oldTow, null, null,null,null,null,TowLocation.Create(request.Tow.TowLocation),null,null, null, null);
                 }
-                if(request.Tow.TowAvailability)
+                if(request.Tow.TowAvailability != null)
                 {
-                    oldTow = Tow.Update(oldTow, null,null,null,null,null,null,TowAvailibility.Create(request.Tow.TowAvailability), null, null, null);
+                    oldTow = Tow.Update(oldTow, null,null,null,null,null,null,(TowAvailability)Enum.Parse(typeof(TowAvailability), request.Tow.TowAvailability), null, null, null);
                 }
                 if(request.Tow.TowType != null)
                 {

@@ -15,9 +15,9 @@ namespace OrderMs.Domain.ValueObjects
             try
             {
                 if (value == null) throw new NullAttributeException("Policy issue date is required");
-                var today = DateTime.Today;
-                if (value.Year > today.Year || value.Month > today.Month || value.Day > today.Day)
-                    throw new InvalidAttributeException("Policy issue day is invalid");
+                // var today = DateTime.Today;
+                // if (value.Year > today.Year || value.Month > today.Month || value.Day > today.Day)
+                //     throw new InvalidAttributeException("Policy issue day is invalid");
 
                 return new PolicyIssueDate(value);
             }

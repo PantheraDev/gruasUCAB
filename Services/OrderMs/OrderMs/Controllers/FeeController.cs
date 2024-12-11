@@ -1,24 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using OrderMs.Application.Handlers.Queries;
 using OrderMs.Application.Commands;
 using OrderMs.Common.Dtos.Request;
-using OrderMs.Domain.Entities;
 using OrderMs.Application.Queries;
 using OrderMs.ApplicationQueries;
 using OrderMs.Common.Exceptions;
 using OrderMs.Infrastructure.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OrderMs.Controllers
 {
     [ApiController]
     [Route("/fee")]
+
     public class FeeController : ControllerBase
     {
         private readonly ILogger<FeeController> _logger;
@@ -30,6 +24,7 @@ namespace OrderMs.Controllers
             _mediator = mediator;
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         public async Task<IActionResult> CreateFee([FromBody] CreateFeeDto createFeeDto)
         {
@@ -66,6 +61,7 @@ namespace OrderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOperatorOnly")]
         [HttpGet]
         public async Task<IActionResult> GetAllFees()
         {
@@ -97,6 +93,7 @@ namespace OrderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOperatorOnly")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetFee([FromRoute] Guid id)
         {
@@ -128,6 +125,7 @@ namespace OrderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> UpdateFee([FromRoute] Guid id, [FromBody] UpdateFeeDto updateFeeDto)
@@ -160,6 +158,7 @@ namespace OrderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> DeleteFee([FromRoute] Guid id)

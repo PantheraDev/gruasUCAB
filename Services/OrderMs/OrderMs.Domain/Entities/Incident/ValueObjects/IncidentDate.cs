@@ -15,8 +15,8 @@ namespace OrderMs.Domain.ValueObjects
             try
             {
                 if (value == null) throw new NullAttributeException("Incident Date is required");
-                var today = DateTime.Today;
-                if (value.Year > today.Year || value.Month > today.Month || value.Day > today.Day) throw new InvalidAttributeException("Incident date is invalid");
+                // var today = DateTime.Today;
+                // if (value.Year < today.Year || value.Month < today.Month || value.Day < today.Day) throw new InvalidAttributeException("Incident date is invalid");
 
                 return new IncidentDate(value);
             }

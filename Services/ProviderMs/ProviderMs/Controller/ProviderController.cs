@@ -1,24 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using ProviderMs.Application.Handlers.Queries;
 using ProviderMs.Application.Command;
 using ProviderMs.Common.dto.Request;
-using ProviderMs.Domain.Entities;
 using ProviderMs.Application.Queries;
 using ProviderMs.Common.Exceptions;
 using ProviderMs.Infrastructure.Exceptions;
 using ProviderMs.ApplicationQueries;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProviderMs.Controllers
 {
     [ApiController]
-    [Route("/Provider")]
+    [Route("/provider")]
+
     public class ProviderController : ControllerBase
     {
         private readonly ILogger<ProviderController> _logger;
@@ -30,6 +24,7 @@ namespace ProviderMs.Controllers
             _mediator = mediator;
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         public async Task<IActionResult> CreateProvider([FromBody] CreateProviderdto createProviderDto)
         {
@@ -66,6 +61,7 @@ namespace ProviderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminProviderOnly")]
         [HttpGet]
         public async Task<IActionResult> GetAllProviders()
         {
@@ -73,10 +69,10 @@ namespace ProviderMs.Controllers
             {
                 var query = new GetAllProvidersQuery();
                 var providers = await _mediator.Send(query);
-                 if (!providers.Any()) 
+                if (!providers.Any())
                 {
-                    return NoContent(); 
-                }   
+                    return NoContent();
+                }
                 return Ok(providers);
             }
             catch (ProviderNotFoundException e)
@@ -101,6 +97,7 @@ namespace ProviderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminProviderOnly")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProvider([FromRoute] Guid id)
         {
@@ -132,6 +129,7 @@ namespace ProviderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminProviderOnly")]
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> UpdateProvider([FromRoute] Guid id, [FromBody] UpdateProviderDto updateProviderDto)
@@ -164,6 +162,7 @@ namespace ProviderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> DeleteProvider([FromRoute] Guid id)

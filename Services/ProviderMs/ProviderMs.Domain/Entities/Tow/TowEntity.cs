@@ -3,7 +3,6 @@ using ProviderMs.Common.Primitives;
 using ProviderMs.Common.Enums;
 using ProviderMs.Domain.Interfaces;
 
-
 namespace ProviderMs.Domain.Entities;
 
 public  sealed class Tow : AggregateRoot, IVehicle
@@ -15,13 +14,13 @@ public  sealed class Tow : AggregateRoot, IVehicle
     public VehicleBrand Brand {get; private set;}
     public VehicleLicensePlate LicensePlate {get; private set;}
     public TowLocation TowLocation {get; private set;}
-    public TowAvailibility TowAvailability {get; private set;}
+    public TowAvailability TowAvailability {get; private set;}
     public TowType TowType {get; private set;}
     public ProviderId ProviderId {get; private set;}
     public Provider provider {get; set;} 
     public TowDriver TowDriver {get; private set;}
 
-    public Tow (VehicleId id, VehicleColor color, VehicleYear year, VehicleModel model, VehicleBrand brand, VehicleLicensePlate licensePlate, TowLocation towLocation, TowAvailibility towAvailibility, TowType towType, ProviderId providerId, TowDriver towDriver)
+    public Tow (VehicleId id, VehicleColor color, VehicleYear year, VehicleModel model, VehicleBrand brand, VehicleLicensePlate licensePlate, TowLocation towLocation, TowAvailability towAvailibility, TowType towType, ProviderId providerId, TowDriver towDriver)
     {
         Id = id;
         Color = color;
@@ -38,7 +37,7 @@ public  sealed class Tow : AggregateRoot, IVehicle
 
     public Tow() { }
 
-    public static Tow Update(Tow tow, VehicleColor? color, VehicleYear? year, VehicleModel? model, VehicleBrand? brand, VehicleLicensePlate? licensePlate, TowLocation? towLocation, TowAvailibility? towAvailibility, TowType? towType, ProviderId? providerId, TowDriver? towDriver){
+    public static Tow Update(Tow tow, VehicleColor? color, VehicleYear? year, VehicleModel? model, VehicleBrand? brand, VehicleLicensePlate? licensePlate, TowLocation? towLocation, TowAvailability? towAvailibility, TowType? towType, ProviderId? providerId, TowDriver? towDriver){
 
             var updates = new List<Action>{
                 () => {if(color !=null) tow.Color = color;},
@@ -47,7 +46,7 @@ public  sealed class Tow : AggregateRoot, IVehicle
                 () => {if(brand !=null)tow.Brand = brand;},
                 () => {if(licensePlate !=null)tow.LicensePlate = licensePlate;},
                 () => {if(towLocation !=null)tow.TowLocation = towLocation;},
-                () => {if(towAvailibility !=null)tow.TowAvailability = towAvailibility;},
+                () => {if(towAvailibility !=null)tow.TowAvailability = towAvailibility.Value;},
                 () => {if(towType !=null)tow.TowType = towType.Value;},
                 () => {if(providerId !=null)tow.ProviderId = providerId;},
                 () => {if(towDriver !=null)tow.TowDriver = towDriver;},

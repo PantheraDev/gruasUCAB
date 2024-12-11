@@ -3,16 +3,19 @@ using UserMs.Core.Repositories;
 using UserMs.Domain.Entities;
 using MediatR;
 using UserMs.Infrastructure.Exceptions;
+using UserMs.Core.Interface;
 
 namespace UserMs.Application.Handlers.User.Commands
 {
     public class UpdateUsersCommandHandler : IRequestHandler<UpdateUsersCommand,Users>
     {
         private readonly IUsersRepository _usersRepository;
+        private readonly IAuthMsService _authMsService;
 
-        public UpdateUsersCommandHandler(IUsersRepository usersRepository)
+        public UpdateUsersCommandHandler(IUsersRepository usersRepository, IAuthMsService authMsService)
         {
             _usersRepository = usersRepository;
+            _authMsService = authMsService;
         }
 
         public async Task<Users> Handle(UpdateUsersCommand request, CancellationToken cancellationToken)
@@ -38,6 +41,7 @@ namespace UserMs.Application.Handlers.User.Commands
                 existingUsers.SetUserProvider(UserProvider.Create(request.Users.UserProvider.Value));
                 existingUsers.SetUserDepartament(UserDepartament.Create(request.Users.UserDepartament.Value));
 
+                await _authMsService.UpdateUser(existingUsers.UserId, existingUsers);
                 await _usersRepository.UpdateUsersAsync(request.UserId,existingUsers);
             }
 

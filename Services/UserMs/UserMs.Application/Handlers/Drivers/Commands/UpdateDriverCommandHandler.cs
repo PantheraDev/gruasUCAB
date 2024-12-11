@@ -3,16 +3,19 @@ using UserMs.Core.Repositories;
 using UserMs.Domain.Entities;
 using MediatR;
 using UserMs.Infrastructure.Exceptions;
+using UserMs.Core.Interface;
 
 namespace UserMs.Application.Handlers.Drives.Commands
 {
-    public class UpdateDriverCommandHandler : IRequestHandler<UpdateDriverCommand,Driver>
+    public class UpdateDriverCommandHandler : IRequestHandler<UpdateDriverCommand, Driver>
     {
         private readonly IDriverRepository _driverRepository;
+        private readonly IAuthMsService _authMsService;
 
-        public UpdateDriverCommandHandler(IDriverRepository driverRepository)
+        public UpdateDriverCommandHandler(IDriverRepository driverRepository, IAuthMsService authMsService)
         {
             _driverRepository = driverRepository;
+            _authMsService = authMsService;
         }
 
         public async Task<Driver> Handle(UpdateDriverCommand request, CancellationToken cancellationToken)
@@ -39,6 +42,7 @@ namespace UserMs.Application.Handlers.Drives.Commands
                 existingDriver.SetDriverAvailable(request.Driver.DriverAvailable);
                 existingDriver.SetDriverLicenseId(LicenseId.Create(request.Driver.DriverLicenseId.Value));
 
+                await _authMsService.UpdateUser(existingDriver.UserId, existingDriver);
                 await _driverRepository.UpdateDriverAsync(request.UserId,existingDriver);
 
                 return existingDriver;

@@ -1,24 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using ProviderMs.Application.Handlers.Queries;
 using ProviderMs.Application.Command;
 using ProviderMs.Common.dto.Request;
-using ProviderMs.Domain.Entities;
 using ProviderMs.Application.Queries;
 using ProviderMs.Common.Exceptions;
 using ProviderMs.Infrastructure.Exceptions;
 using ProviderMs.ApplicationQueries;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProviderMs.Controllers
 {
     [ApiController]
-    [Route("/Tow")]
+    [Route("/tow")]
+
     public class TowController : ControllerBase
     {
         private readonly ILogger<TowController> _logger;
@@ -30,6 +24,7 @@ namespace ProviderMs.Controllers
             _mediator = mediator;
         }
 
+        [Authorize(Policy = "AdminProviderOnly")]
         [HttpPost]
         public async Task<IActionResult> CreateVehicle([FromBody] CreateTowdto createTowDto)
         {
@@ -66,6 +61,7 @@ namespace ProviderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminProviderOperatorOnly")]
         [HttpGet]
         public async Task<IActionResult> GetAllTows()
         {
@@ -97,6 +93,7 @@ namespace ProviderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminProviderOperatorOnly")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetVehicle([FromRoute] Guid id)
         {
@@ -128,6 +125,7 @@ namespace ProviderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminProviderOnly")]
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> UpdateVehicle([FromRoute] Guid id, [FromBody] UpdateTowDto updateTowDto)
@@ -160,6 +158,7 @@ namespace ProviderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminProviderOnly")]
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> DeleteVehicle([FromRoute] Guid id)

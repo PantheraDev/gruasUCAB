@@ -1,24 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using ProviderMs.Application.Handlers.Queries;
 using ProviderMs.Application.Command;
 using ProviderMs.Common.dto.Request;
-using ProviderMs.Domain.Entities;
 using ProviderMs.Application.Queries;
 using ProviderMs.ApplicationQueries;
 using ProviderMs.Common.Exceptions;
 using ProviderMs.Infrastructure.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProviderMs.Controllers
 {
     [ApiController]
-    [Route("/Departament")]
+    [Route("/departament")]
+
     public class DepartamentController : ControllerBase
     {
         private readonly ILogger<DepartamentController> _logger;
@@ -30,6 +25,7 @@ namespace ProviderMs.Controllers
             _mediator = mediator;
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         public async Task<IActionResult> CreatedDepartament([FromBody] CreateDepartamentdto createDepartamentdto)
         {
@@ -66,6 +62,7 @@ namespace ProviderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminProviderOnly")]
         [HttpGet]
         public async Task<IActionResult> GetAllDepartaments()
         {
@@ -97,6 +94,7 @@ namespace ProviderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminProviderOnly")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDepartament([FromRoute] Guid id)
         {
@@ -128,6 +126,7 @@ namespace ProviderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminProviderOnly")]
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> UpdateDepartament([FromRoute] Guid id, [FromBody] UpdateDepartamentDto updateDepartamentDto)
@@ -160,6 +159,7 @@ namespace ProviderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> DeleteDepartament([FromRoute] Guid id)

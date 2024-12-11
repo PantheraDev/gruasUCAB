@@ -10,6 +10,10 @@ using Microsoft.EntityFrameworkCore;
 using UserMs.Application.Handlers.Drives.Queries;
 using UserMs.Application.Handlers.User.Queries;
 using UserMs.Application.Handlers.License.Queries;
+using UserMs;
+using UserMs.Core.Interface;
+using UserMs.Infrastructure;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +32,8 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGenWithAuth(builder.Configuration);
+builder.Services.KeycloakConfiguration(builder.Configuration);
 
 builder.Services.AddMediatR(typeof(CreateLicenseCommandHandler).Assembly);
 builder.Services.AddMediatR(typeof(GetLicenseQueryHandler).Assembly);
@@ -52,6 +57,7 @@ builder.Services.AddTransient<ILicenseRepository, LicenseRepository>();
 builder.Services.AddTransient<IUserDbContext, UserDbContext>();
 builder.Services.AddTransient<IDriverRepository, DriverRepository>();
 builder.Services.AddTransient<IUsersRepository, UsersRepository>();
+builder.Services.AddTransient<IAuthMsService, AuthMsService>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -66,7 +72,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 
 builder.Services.AddDbContext<UserDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresSQLConnection"))); 
+    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresSQLConnection")));
 
 var app = builder.Build();
 app.UseCors("AllowAll");
@@ -79,9 +85,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

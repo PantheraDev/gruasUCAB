@@ -34,7 +34,7 @@ namespace ProviderMs.Infrastructure.Database.Configuration
                     .HasConversion(towlocation => towlocation.Value, value => TowLocation.Create(value)!)
                     .IsRequired();
                 builder.Property(s => s.TowAvailability)
-                    .HasConversion(towavailability=> towavailability.Value, value => TowAvailibility.Create(value)!)
+                    .HasConversion(TowAvailability => TowAvailability.ToString(), value =>  (TowAvailability)Enum.Parse(typeof(TowAvailability),value)!)
                     .IsRequired();
                 builder.Property(s => s.TowType)
                     .HasConversion(towtype => towtype.ToString(), value =>  (TowType)Enum.Parse(typeof(TowType),value)!)

@@ -7,6 +7,7 @@
 
 #DOCKER CONFIG
 *Services/Database
+*Services/Keycloak
 *postgresql
 *pgadmin
 # User-specific files
