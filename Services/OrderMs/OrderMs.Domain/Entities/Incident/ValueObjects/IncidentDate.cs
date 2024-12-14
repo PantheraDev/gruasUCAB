@@ -16,12 +16,11 @@ namespace OrderMs.Domain.ValueObjects
             {
                 if (value == null) throw new NullAttributeException("Incident Date is required");
                 var today = DateTime.Today;
-
-                if (value < today) throw new InvalidAttributeException("Incident day is invalid");
+                if (value.Year > today.Year || value.Month > today.Month || value.Day > today.Day) throw new InvalidAttributeException("Incident date is invalid");
 
                 return new IncidentDate(value);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 throw;
             }

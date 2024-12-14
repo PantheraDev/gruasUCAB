@@ -17,6 +17,16 @@ builder.Services.AddPresentation()
     .AddInfrastructure(builder.Configuration)
     .AddApplication();
 
+//* Para que funcione el frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 
 
 var _appSettings = new AppSettings();
@@ -32,6 +42,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 

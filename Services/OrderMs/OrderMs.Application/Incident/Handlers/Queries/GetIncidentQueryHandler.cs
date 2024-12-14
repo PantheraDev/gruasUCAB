@@ -31,8 +31,8 @@ namespace OrderMs.Application.Handlers.Queries
             return new GetIncidentDto(
                     incident.Id.Value,
                     incident.CreatedBy,
-                    incident.Description.Value,
                     incident.DestinyLocation.Value,
+                    incident.Description.Value,
                     incident.Date.Value
                 );
         }
