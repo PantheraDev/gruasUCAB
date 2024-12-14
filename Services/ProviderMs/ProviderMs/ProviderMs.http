@@ -1,6 +1,0 @@
-@ProviderMs_HostAddress = http://localhost:5272
-
-GET {{ProviderMs_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
