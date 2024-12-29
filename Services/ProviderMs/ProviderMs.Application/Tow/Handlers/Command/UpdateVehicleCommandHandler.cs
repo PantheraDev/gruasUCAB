@@ -31,35 +31,43 @@ namespace ProviderMs.Application.Command
 
                 if (request.Tow.Color != null)
                 {
-                    oldTow = Tow.Update(oldTow, VehicleColor.Create(request.Tow.Color), null, null, null, null, null, null, null);
+                    oldTow = Tow.Update(oldTow, VehicleColor.Create(request.Tow.Color), null, null, null, null, null, null, null, null, null);
                 }
                 if (request.Tow.Year != null)
                 {
-                    oldTow = Tow.Update(oldTow, null, VehicleYear.Create(request.Tow.Year), null, null, null, null, null, null);
+                    oldTow = Tow.Update(oldTow, null, VehicleYear.Create(request.Tow.Year), null, null, null, null, null, null, null, null);
                 }
                 if (request.Tow.Model != null)
                 {
-                    oldTow = Tow.Update(oldTow, null, null, VehicleModel.Create(request.Tow.Model), null, null, null, null, null);
+                    oldTow = Tow.Update(oldTow, null, null, VehicleModel.Create(request.Tow.Model), null, null, null, null, null, null, null);
                 }
                 if (request.Tow.Brand != null)
                 {
-                    oldTow = Tow.Update(oldTow, null, null, null, VehicleBrand.Create(request.Tow.Brand), null,null ,null ,null);
+                    oldTow = Tow.Update(oldTow, null, null, null, VehicleBrand.Create(request.Tow.Brand), null,null ,null ,null, null, null);
                 }
                 if (request.Tow.LicensePlate != null)
                 {
-                    oldTow = Tow.Update(oldTow, null, null, null, null, VehicleLicensePlate.Create(request.Tow.LicensePlate), null, null, null);
+                    oldTow = Tow.Update(oldTow, null, null, null, null, VehicleLicensePlate.Create(request.Tow.LicensePlate), null, null, null, null, null);
                 }
                 if(request.Tow.TowLocation !=null)
                 {
-                    oldTow = Tow.Update(oldTow, null, null,null,null,null,TowLocation.Create(request.Tow.TowLocation),null,null);
+                    oldTow = Tow.Update(oldTow, null, null,null,null,null,TowLocation.Create(request.Tow.TowLocation),null,null, null, null);
                 }
                 if(request.Tow.TowAvailability)
                 {
-                    oldTow = Tow.Update(oldTow, null,null,null,null,null,null,TowAvailibility.Create(request.Tow.TowAvailability), null);
+                    oldTow = Tow.Update(oldTow, null,null,null,null,null,null,TowAvailibility.Create(request.Tow.TowAvailability), null, null, null);
                 }
                 if(request.Tow.TowType != null)
                 {
-                    oldTow = Tow.Update(oldTow, null,null,null,null,null,null,null,(TowType)Enum.Parse(typeof(TowType), request.Tow.TowType));
+                    oldTow = Tow.Update(oldTow, null,null,null,null,null,null,null,(TowType)Enum.Parse(typeof(TowType), request.Tow.TowType), null, null);
+                }
+                if(request.Tow.ProviderId != null)
+                {
+                    oldTow = Tow.Update(oldTow, null,null,null,null,null,null,null,null,ProviderId.Create(request.Tow.ProviderId),null);
+                }
+                if(request.Tow.TowDriver != null)
+                {
+                    oldTow = Tow.Update(oldTow, null,null,null,null,null,null,null,null,null,TowDriver.Create(request.Tow.TowDriver));
                 }
 
                 //TODO: Hay que hacer que se guarde el UpdatedBy

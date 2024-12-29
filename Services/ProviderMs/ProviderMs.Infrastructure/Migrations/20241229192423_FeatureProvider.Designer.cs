@@ -12,7 +12,7 @@ using ProviderMs.Infrastructure.Database;
 namespace ProviderMs.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241228215923_FeatureProvider")]
+    [Migration("20241229192423_FeatureProvider")]
     partial class FeatureProvider
     {
         /// <inheritdoc />
@@ -164,6 +164,9 @@ namespace ProviderMs.Infrastructure.Migrations
 
                     b.Property<bool>("TowAvailability")
                         .HasColumnType("boolean");
+
+                    b.Property<Guid>("TowDriver")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("TowLocation")
                         .IsRequired()

@@ -26,8 +26,6 @@ namespace OrderMs.Infrastructure.Repositories
         public async Task<AdditionalCost?> GetByIdAsync(AdditionalCostId id)
         {
             var additionalCost = await _dbContext.AdditionalCosts.FirstOrDefaultAsync(x => x.Id == id);
-            //TODO: Borrar todos los console
-            Console.WriteLine("This is the AdditionalCost:" + additionalCost);
             return additionalCost;
         }
         public async Task<List<AdditionalCost>?> GetAllAsync()

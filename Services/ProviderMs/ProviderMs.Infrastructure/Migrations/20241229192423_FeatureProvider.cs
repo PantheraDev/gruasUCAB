@@ -92,6 +92,7 @@ namespace ProviderMs.Infrastructure.Migrations
                     TowAvailability = table.Column<bool>(type: "boolean", nullable: false),
                     TowType = table.Column<string>(type: "text", nullable: false),
                     ProviderId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TowDriver = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
