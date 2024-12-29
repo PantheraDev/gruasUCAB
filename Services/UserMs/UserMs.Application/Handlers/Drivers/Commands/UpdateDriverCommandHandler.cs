@@ -34,6 +34,8 @@ namespace UserMs.Application.Handlers.Drives.Commands
 
                 existingDriver.SetUserEmail(UserEmail.Create(request.Driver.UserEmail.Value));
                 existingDriver.SetUserPassword(UserPassword.Create(request.Driver.UserPassword.Value));
+                existingDriver.SetUserProvider(UserProvider.Create(request.Driver.UserProvider.Value));
+                existingDriver.SetUserDepartament(UserDepartament.Create(request.Driver.UserDepartament.Value));
                 existingDriver.SetDriverAvailable(request.Driver.DriverAvailable);
                 existingDriver.SetDriverLicenseId(LicenseId.Create(request.Driver.DriverLicenseId.Value));
 

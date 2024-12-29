@@ -10,5 +10,7 @@ namespace UserMs.Application.Queries.Drivers
         public string? userPassword { get; set; }
         public string? driverAvailable { get; set; }
         public Guid? driverLicenseId { get; set; }
+        public Guid? userProvider { get; set; }
+        public Guid? userDepartament { get; set; }
     }
 }

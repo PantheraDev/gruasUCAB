@@ -1,7 +1,5 @@
 ﻿using UserMs.Core.Repositories;
 using UserMs.Domain.Entities;
-using UserMs.Infrastructure.Database;
-using Microsoft.EntityFrameworkCore;
 using UserMs.Core.Database;
 
 namespace UserMs.Infrastructure.Repositories

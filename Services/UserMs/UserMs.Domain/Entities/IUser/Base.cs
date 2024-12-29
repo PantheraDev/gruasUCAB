@@ -6,16 +6,20 @@ namespace UserMs.Domain.Entities
         public UserEmail UserEmail { get; private set; }
         public UserPassword UserPassword { get; private set; }
         public UserDelete? UserDelete { get; private set; }
+        public UserProvider UserProvider { get; private set; }
+        public UserDepartament UserDepartament { get; private set; }
         public DateTime CreatedAt { get; set; }
         public string? CreatedBy { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public string? UpdatedBy { get; set; }
 
-        protected Base(UserId userId, UserEmail userEmail, UserPassword userPassword)
+        protected Base(UserId userId, UserEmail userEmail, UserPassword userPassword, UserProvider userProvider, UserDepartament userDepartament)
         {
             UserId = userId;
             UserEmail = userEmail;
             UserPassword = userPassword;
+            UserProvider = userProvider;
+            UserDepartament = userDepartament;
         }
 
         public void SetUserEmail(UserEmail userEmail)
@@ -31,6 +35,16 @@ namespace UserMs.Domain.Entities
         public void SetUserDelete(UserDelete userDelete)
         {
             UserDelete = userDelete;
+        }
+
+        public void SetUserProvider(UserProvider userProvider)
+        {
+            UserProvider = userProvider;
+        }
+
+        public void SetUserDepartament(UserDepartament userDepartament)
+        {
+            UserDepartament = userDepartament;
         }
     }
 }

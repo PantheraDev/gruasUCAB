@@ -12,7 +12,7 @@ using UserMs.Infrastructure.Database;
 namespace UserMs.Infrastructure.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20241210145730_FeatureUser")]
+    [Migration("20241229185244_FeatureUser")]
     partial class FeatureUser
     {
         /// <inheritdoc />
@@ -55,14 +55,19 @@ namespace UserMs.Infrastructure.Migrations
                         .HasColumnType("boolean")
                         .HasDefaultValueSql("false");
 
+                    b.Property<Guid>("UserDepartament")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("UserEmail")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("UserPassword")
                         .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("character varying(8)");
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserProvider")
+                        .HasColumnType("uuid");
 
                     b.HasKey("UserId");
 
@@ -117,14 +122,19 @@ namespace UserMs.Infrastructure.Migrations
                         .HasColumnType("boolean")
                         .HasDefaultValueSql("false");
 
+                    b.Property<Guid>("UserDepartament")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("UserEmail")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("UserPassword")
                         .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("character varying(8)");
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserProvider")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("UsersType")
                         .IsRequired()

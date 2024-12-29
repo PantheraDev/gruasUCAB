@@ -61,6 +61,8 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.Converters.Add(new UserIdJsonConverter());
     options.JsonSerializerOptions.Converters.Add(new UserEmailJsonConverter());
     options.JsonSerializerOptions.Converters.Add(new UserPasswordJsonConverter());
+    options.JsonSerializerOptions.Converters.Add(new UserProviderJsonConverter());
+    options.JsonSerializerOptions.Converters.Add(new UserDepartamentJsonConverter());
 });
 
 builder.Services.AddDbContext<UserDbContext>(options =>

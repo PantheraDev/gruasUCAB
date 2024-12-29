@@ -21,9 +21,11 @@ namespace UserMs.Infrastructure.Database.Configuration
         {
             builder.HasKey(s => s.UserId);
             builder.Property(s => s.UserEmail).IsRequired();
-            builder.Property(s => s.UserPassword).IsRequired().HasMaxLength(8);
+            builder.Property(s => s.UserPassword).IsRequired();
             builder.Property(s => s.UserDelete).HasDefaultValueSql("false");
             builder.Property(s => s.UsersType).IsRequired().HasMaxLength(50).HasConversion<string>();
+            builder.Property(s => s.UserProvider).IsRequired();
+            builder.Property(s => s.UserDepartament).IsRequired();
         }
     }
 
@@ -33,10 +35,12 @@ namespace UserMs.Infrastructure.Database.Configuration
         {
             builder.HasKey(s => s.UserId);
             builder.Property(s => s.UserEmail).IsRequired();
-            builder.Property(s => s.UserPassword).IsRequired().HasMaxLength(8);
+            builder.Property(s => s.UserPassword).IsRequired();
             builder.Property(s => s.UserDelete).HasDefaultValueSql("false");
             builder.Property(s => s.DriverAvailable).IsRequired().HasMaxLength(50).HasConversion<string>();
             builder.Property(s => s.DriverLicenseId).IsRequired();
+            builder.Property(s => s.UserProvider).IsRequired();
+            builder.Property(s => s.UserDepartament).IsRequired();
         }
     }
 }

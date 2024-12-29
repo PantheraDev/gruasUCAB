@@ -63,6 +63,12 @@ namespace UserMs.Infrastructure.Database
                         .HasForeignKey<Driver>(d => d.DriverLicenseId);
             modelBuilder.Entity<Driver>()   
                         .Property(d => d.DriverAvailable);
+            modelBuilder.Entity<Driver>()
+                        .Property(d => d.UserProvider)
+                        .HasConversion(new UserProviderValueConverter());
+            modelBuilder.Entity<Driver>()
+                        .Property(d => d.UserDepartament)
+                        .HasConversion(new UserDepartamentValueConverter());
 
             modelBuilder.Entity<Users>()   
                         .Property(u => u.UserId)   
@@ -78,6 +84,12 @@ namespace UserMs.Infrastructure.Database
                         .HasConversion<UserDeleteConverter>();
             modelBuilder.Entity<Users>()   
                         .Property(u => u.UsersType);
+            modelBuilder.Entity<Users>()
+                        .Property(u => u.UserProvider)
+                        .HasConversion(new UserProviderValueConverter());
+            modelBuilder.Entity<Users>()
+                        .Property(u => u.UserDepartament)
+                        .HasConversion(new UserDepartamentValueConverter());
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
