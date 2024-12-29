@@ -16,8 +16,10 @@ namespace OrderMs.Domain.ValueObjects
             {
                 if (value == null) throw new NullAttributeException("Policy expiration date is required");
                 var today = DateTime.Today;
-                if (value.Year <= today.Year)
-                    throw new InvalidAttributeException("policy expiration date is invalid");
+                today = today.AddYears(+ 1);
+                Console.WriteLine(today);
+                if (value.Year > today.Year || value.Month > today.Month || value.Day > today.Day)
+                    throw new InvalidAttributeException("Policy expiration date is invalid");
                 return new PolicyExpirationDate(value);
             }
             catch (Exception e)

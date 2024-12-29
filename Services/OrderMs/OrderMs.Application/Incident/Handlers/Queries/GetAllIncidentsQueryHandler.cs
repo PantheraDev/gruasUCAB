@@ -33,8 +33,8 @@ namespace OrderMs.Application.Handlers.Queries
                 new GetIncidentDto(
                     c.Id.Value,
                     c.CreatedBy,
-                    c.Description.Value,
                     c.DestinyLocation.Value,
+                    c.Description.Value,
                     c.Date.Value
                 )
             ).ToList();
