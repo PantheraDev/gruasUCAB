@@ -28,11 +28,15 @@ namespace UserMs.Application.Handlers.Drives.Commands
                 var userEmailValue = request.Driver.UserEmail?.Value;
                 var userPasswordValue = request.Driver.UserPassword?.Value;
                 var driverLicenseId = request.Driver.DriverLicenseId;
+                var userProviderValue = request.Driver.UserProvider.Value;
+                var userDepartamentValue = request.Driver.UserDepartament.Value;
 
                 var driver = new Driver(
                     UserId.Create(),
                     UserEmail.Create(userEmailValue ?? string.Empty),
                     UserPassword.Create(userPasswordValue ?? string.Empty),
+                    UserProvider.Create(userProviderValue),
+                    UserDepartament.Create(userDepartamentValue),
                     Enum.Parse<DriverAvailable>(request.Driver.DriverAvailable!),
                     driverLicenseId
                 );

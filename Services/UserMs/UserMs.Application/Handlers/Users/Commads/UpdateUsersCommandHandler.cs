@@ -35,6 +35,8 @@ namespace UserMs.Application.Handlers.User.Commands
                 existingUsers.SetUserEmail(UserEmail.Create(request.Users.UserEmail.Value));
                 existingUsers.SetUserPassword(UserPassword.Create(request.Users.UserPassword.Value));
                 existingUsers.SetUsersType(request.Users.UsersType);
+                existingUsers.SetUserProvider(UserProvider.Create(request.Users.UserProvider.Value));
+                existingUsers.SetUserDepartament(UserDepartament.Create(request.Users.UserDepartament.Value));
 
                 await _usersRepository.UpdateUsersAsync(request.UserId,existingUsers);
             }

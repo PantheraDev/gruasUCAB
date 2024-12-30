@@ -32,3 +32,19 @@ public class UserDeleteConverter : ValueConverter<UserDelete, bool>
         b => UserDelete.Create(b)
     ) { }
 }
+
+public class UserProviderValueConverter : ValueConverter<UserProvider, Guid>
+{
+    public UserProviderValueConverter() : base(
+        v => v.Value, // Convierte UserId a Guid
+        v => UserProvider.Create(v) // Convierte Guid a UserId
+    ) { }
+}
+
+public class UserDepartamentValueConverter : ValueConverter<UserDepartament, Guid>
+{
+    public UserDepartamentValueConverter() : base(
+        v => v.Value, // Convierte UserId a Guid
+        v => UserDepartament.Create(v) // Convierte Guid a UserId
+    ) { }
+}

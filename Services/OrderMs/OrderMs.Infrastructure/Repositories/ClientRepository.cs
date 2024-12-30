@@ -30,8 +30,6 @@ namespace OrderMs.Infrastructure.Repositories
         public async Task<Client?> GetByIdAsync(ClientId id)
         {
             var client = await _dbContext.Clients.FirstOrDefaultAsync(x => x.Id == id);
-            //TODO: Borrar todos los console
-            Console.WriteLine("This is the client:" + client);
             return client;
         }
         public async Task<List<Client>?> GetAllAsync()

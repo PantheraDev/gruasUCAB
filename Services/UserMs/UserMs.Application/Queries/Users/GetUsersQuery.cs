@@ -9,5 +9,7 @@ namespace UserMs.Application.Queries.User
         public string? userEmail { get; set; }
         public string? userPassword { get; set; }
         public string? userType { get; set; }
+        public Guid? userProvider { get; set; }
+        public Guid? userDepartament { get; set; }
     }
 }

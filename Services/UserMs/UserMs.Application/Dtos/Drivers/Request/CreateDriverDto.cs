@@ -7,5 +7,7 @@ namespace UserMs.Application.Dtos.Drivers.Request{
         public UserPassword? UserPassword { get; set; }
         public string? DriverAvailable { get; init; }
         public LicenseId? DriverLicenseId { get; set; }
+        public UserProvider? UserProvider { get; set; }
+        public UserDepartament? UserDepartament { get; set; }
     }
 }

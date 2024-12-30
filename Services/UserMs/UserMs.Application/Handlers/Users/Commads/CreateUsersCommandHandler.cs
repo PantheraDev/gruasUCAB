@@ -24,11 +24,15 @@ namespace UserMs.Application.Handlers.User.Commands
 
                 var usersEmailValue = request.Users.UserEmail?.Value;
                 var usersPasswordValue = request.Users.UserPassword?.Value;
+                var usersProviderValue = request.Users.UserProvider?.Value;
+                var usersDepartamentValue = request.Users.UserDepartament?.Value;
 
                 var users = new Users(
                     UserId.Create(),
                     UserEmail.Create(usersEmailValue ?? string.Empty),
                     UserPassword.Create(usersPasswordValue ?? string.Empty),
+                    UserProvider.Create(usersProviderValue.Value),
+                    UserDepartament.Create(usersDepartamentValue.Value),
                     Enum.Parse<UsersType>(request.Users.UsersType!)
                 );
 
