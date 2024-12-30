@@ -162,6 +162,9 @@ namespace ProviderMs.Infrastructure.Migrations
                     b.Property<bool>("TowAvailability")
                         .HasColumnType("boolean");
 
+                    b.Property<Guid>("TowDriver")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("TowLocation")
                         .IsRequired()
                         .HasColumnType("text");

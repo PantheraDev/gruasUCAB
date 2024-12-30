@@ -39,6 +39,8 @@ namespace ProviderMs.Application.Handlers.Queries
                     p.TowLocation.Value,
                     p.TowAvailability.Value,
                     p.TowType,
+                    p.ProviderId.Value,
+                    p.TowDriver.Value,
                     p.CreatedBy
                 )
             ).ToList();

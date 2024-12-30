@@ -40,9 +40,10 @@ namespace ProviderMs.Application.Command
                 var towlocation = TowLocation.Create(request.Vehicle.TowLocation);
                 var towavailability = TowAvailibility.Create(request.Vehicle.TowAvailability);
                 var towtype = (TowType)Enum.Parse(typeof(TowType), request.Vehicle.TowType);
+                var towdriver = TowDriver.Create(request.Vehicle.TowDriver);
                 //* Se crea el cliente
                 var providerId = ProviderId.Create(request.Vehicle.ProviderId);
-                var vehicle = new Tow(towId, towcolor, towyear, towmodel, towbrand, towlicenseplate, towlocation, towavailability, towtype, providerId);
+                var vehicle = new Tow(towId, towcolor, towyear, towmodel, towbrand, towlicenseplate, towlocation, towavailability, towtype, providerId, towdriver);
 
                 //* Se agrega el cliente a la BD
                 await _vehicleRepository.AddAsync(vehicle);
