@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 
-namespace JobMS
+namespace JobMs
 {
-    internal static class DependencyInjection
+    internal static class AuthConfiguration
     {
         internal static IServiceCollection KeycloakConfiguration(
             this IServiceCollection services,

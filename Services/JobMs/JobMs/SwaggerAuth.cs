@@ -1,7 +1,7 @@
 
 using Microsoft.OpenApi.Models;
 
-namespace JobMS
+namespace JobMs
 {
     internal static class SwaggerAuth
     {

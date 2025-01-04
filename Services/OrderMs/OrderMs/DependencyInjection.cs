@@ -1,7 +1,9 @@
 
+using System.Net.Http.Headers;
 using OrderMs.Core.Database;
 using OrderMs.Core.Repositories;
 using OrderMs.Core.Services;
+using OrderMs.Infrastructure;
 using OrderMs.Infrastructure.Database;
 using OrderMs.Infrastructure.Repositories;
 using OrderMs.Infrastructure.Services;
@@ -31,6 +33,26 @@ namespace OrderMs
             services.AddScoped<IProviderService, ProviderService>();
             services.AddScoped<IGoogleApiService, GoogleApiService>();
 
+            services.AddScoped<ITowRepository, TowService>();
+            services.AddScoped<INotificationRepository, NotificationService>();
+
+            services.AddHttpContextAccessor();
+
+
+            services.AddHttpClient<TowService>(
+                client =>
+                {
+                    client.BaseAddress = new Uri("https://localhost:18083");
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                }
+            );
+            services.AddHttpClient<NotificationService>(
+                client =>
+                {
+                    client.BaseAddress = new Uri("https://localhost:18085");
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                }
+            );
             return services;
         }
     }
