@@ -1,0 +1,29 @@
+# Dirección del LOGIN
+
+localhost:18080/realms/nombre-del-reino/account [POST]
+
+# Ruta del Token
+
+localhost:18080/realms/nombre-del-reino/protocol/openid-connect/token [POST]
+
+{
+	"grand-type": "password",
+	"cliend_id": "myclient",
+	"scope": "email openid",
+	"username": "test@test.com",
+	"password": "123"
+}
+
+{
+	"grand-type": "client_credentials",
+	"cliend_id": "myclient",
+	"client_secret": "alksdglagd"
+}
+
+# Muestra los endpoint utilides del realm
+
+http://localhost:18080/realms/auth/.well-known/openid-configuration [GET]
+
+# Muestra la información del Usuario
+
+http://localhost:18080/realms/auth/protocol/openid-connect/userinfo [GET]

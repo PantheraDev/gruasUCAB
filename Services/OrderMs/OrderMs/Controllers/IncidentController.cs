@@ -1,24 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using OrderMs.Application.Handlers.Queries;
 using OrderMs.Application.Commands;
 using OrderMs.Common.Dtos.Request;
-using OrderMs.Domain.Entities;
 using OrderMs.Application.Queries;
 using OrderMs.ApplicationQueries;
 using OrderMs.Common.Exceptions;
 using OrderMs.Infrastructure.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OrderMs.Controllers
 {
     [ApiController]
     [Route("/incident")]
+    [Authorize(Policy = "AdminOperatorOnly")]
     public class IncidentController : ControllerBase
     {
         private readonly ILogger<IncidentController> _logger;

@@ -38,7 +38,7 @@ namespace ProviderMs.Application.Command
                 var towbrand = VehicleBrand.Create(request.Vehicle.Brand);
                 var towlicenseplate = VehicleLicensePlate.Create(request.Vehicle.LicensePlate);
                 var towlocation = TowLocation.Create(request.Vehicle.TowLocation);
-                var towavailability = TowAvailibility.Create(request.Vehicle.TowAvailability);
+                var towavailability = (TowAvailability)Enum.Parse(typeof(TowAvailability), request.Vehicle.TowAvailability);
                 var towtype = (TowType)Enum.Parse(typeof(TowType), request.Vehicle.TowType);
                 var towdriver = TowDriver.Create(request.Vehicle.TowDriver);
                 //* Se crea el cliente

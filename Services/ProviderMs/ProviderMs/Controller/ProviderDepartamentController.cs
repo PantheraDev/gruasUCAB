@@ -4,11 +4,13 @@ using ProviderMs.Application.Queries;
 using ProviderMs.Common.Exceptions;
 using ProviderMs.ApplicationQueries;
 using ProviderMs.Application.Command;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProviderMs.Controllers
 {
     [ApiController]
-    [Route("/ProviderDepartament")]
+    [Route("/providerDepartament")]
+
     public class ProviderDepartamentController : ControllerBase
     {
         private readonly ILogger<ProviderDepartamentController> _logger;
@@ -20,6 +22,7 @@ namespace ProviderMs.Controllers
             _mediator = mediator;
         }
 
+        [Authorize(Policy = "AdminProviderOnly")]
         [HttpGet]
         public async Task<IActionResult> GetAllProviderDepartaments()
         {
@@ -51,6 +54,7 @@ namespace ProviderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminProviderOnly")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProviderDepartament([FromRoute] Guid id)
         {
@@ -82,13 +86,14 @@ namespace ProviderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpDelete]
         [Route("{providerId}/departaments/{departamentId}")]
         public async Task<IActionResult> DeleteProviderDepartament([FromRoute] Guid providerId, [FromRoute] Guid departamentId)
         {
             try
             {
-                var command = new DeleteProviderDepartamentCommand(providerId,departamentId);
+                var command = new DeleteProviderDepartamentCommand(providerId, departamentId);
                 var providerDepartamentId = await _mediator.Send(command);
                 return Ok(providerDepartamentId);
             }

@@ -15,11 +15,11 @@ namespace OrderMs.Domain.ValueObjects
             try
             {
                 if (value == null) throw new NullAttributeException("Policy expiration date is required");
-                var today = DateTime.Today;
-                today = today.AddYears(+ 1);
-                Console.WriteLine(today);
-                if (value.Year > today.Year || value.Month > today.Month || value.Day > today.Day)
-                    throw new InvalidAttributeException("Policy expiration date is invalid");
+                // var today = DateTime.Today;
+                // today = today.AddYears(+ 1);
+                // Console.WriteLine(today);
+                // if (value.Year > today.Year || value.Month > today.Month || value.Day > today.Day)
+                //     throw new InvalidAttributeException("Policy expiration date is invalid");
                 return new PolicyExpirationDate(value);
             }
             catch (Exception e)

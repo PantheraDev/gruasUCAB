@@ -37,7 +37,7 @@ namespace ProviderMs.Application.Handlers.Queries
                     p.Brand.Value,
                     p.LicensePlate.Value,
                     p.TowLocation.Value,
-                    p.TowAvailability.Value,
+                    p.TowAvailability,
                     p.TowType,
                     p.ProviderId.Value,
                     p.TowDriver.Value,

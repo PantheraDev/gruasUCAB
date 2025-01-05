@@ -7,11 +7,13 @@ using OrderMs.Application.Queries;
 using OrderMs.ApplicationQueries;
 using OrderMs.Common.Exceptions;
 using OrderMs.Infrastructure.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OrderMs.Controllers
 {
     [ApiController]
     [Route("/order")]
+
     public class OrderController : ControllerBase
     {
         private readonly ILogger<OrderController> _logger;
@@ -23,6 +25,7 @@ namespace OrderMs.Controllers
             _mediator = mediator;
         }
 
+        [Authorize(Policy = "AdminOperatorOnly")]
         [HttpPost]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderDto createOrderDto)
         {
@@ -59,6 +62,7 @@ namespace OrderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminDriverOperatorOnly")]
         [HttpGet]
         public async Task<IActionResult> GetAllOrders()
         {
@@ -90,6 +94,7 @@ namespace OrderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminDriverOperatorOnly")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOrder([FromRoute] Guid id)
         {
@@ -121,6 +126,7 @@ namespace OrderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOperatorOnly")]
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> UpdateOrder([FromRoute] Guid id, [FromBody] UpdateOrderDto updateOrderDto)
@@ -153,6 +159,7 @@ namespace OrderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOperatorOnly")]
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> DeleteOrder([FromRoute] Guid id)

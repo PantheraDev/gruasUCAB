@@ -1,24 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using OrderMs.Application.Handlers.Queries;
 using OrderMs.Application.Commands;
 using OrderMs.Common.Dtos.Request;
-using OrderMs.Domain.Entities;
 using OrderMs.Application.Queries;
 using OrderMs.ApplicationQueries;
 using OrderMs.Common.Exceptions;
 using OrderMs.Infrastructure.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OrderMs.Controllers
 {
     [ApiController]
     [Route("/client")]
+
     public class ClientController : ControllerBase
     {
         private readonly ILogger<ClientController> _logger;
@@ -30,6 +25,7 @@ namespace OrderMs.Controllers
             _mediator = mediator;
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         public async Task<IActionResult> CreateClient([FromBody] CreateClientDto createClientDto)
         {
@@ -66,6 +62,7 @@ namespace OrderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOperatorOnly")]
         [HttpGet]
         public async Task<IActionResult> GetAllClients()
         {
@@ -97,6 +94,7 @@ namespace OrderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOperatorOnly")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetClient([FromRoute] Guid id)
         {
@@ -128,6 +126,7 @@ namespace OrderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> UpdateClient([FromRoute] Guid id, [FromBody] UpdateClientDto updateClientDto)
@@ -160,6 +159,7 @@ namespace OrderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> DeleteClient([FromRoute] Guid id)

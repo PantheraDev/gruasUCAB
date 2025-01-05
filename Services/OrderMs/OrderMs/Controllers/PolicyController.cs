@@ -1,24 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using OrderMs.Application.Handlers.Queries;
 using OrderMs.Application.Commands;
 using OrderMs.Common.Dtos.Request;
-using OrderMs.Domain.Entities;
 using OrderMs.Application.Queries;
 using OrderMs.ApplicationQueries;
 using OrderMs.Common.Exceptions;
 using OrderMs.Infrastructure.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OrderMs.Controllers
 {
     [ApiController]
     [Route("/policy")]
+
     public class PolicyController : ControllerBase
     {
         private readonly ILogger<PolicyController> _logger;
@@ -30,6 +25,7 @@ namespace OrderMs.Controllers
             _mediator = mediator;
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         public async Task<IActionResult> CreatePolicy([FromBody] CreatePolicyDto createPolicyDto)
         {
@@ -66,6 +62,7 @@ namespace OrderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOperatorOnly")]
         [HttpGet]
         public async Task<IActionResult> GetAllPolicys()
         {
@@ -97,6 +94,7 @@ namespace OrderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOperatorOnly")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPolicy([FromRoute] Guid id)
         {
@@ -128,6 +126,7 @@ namespace OrderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> UpdatePolicy([FromRoute] Guid id, [FromBody] UpdatePolicyDto updatePolicyDto)
@@ -160,6 +159,7 @@ namespace OrderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> DeletePolicy([FromRoute] Guid id)

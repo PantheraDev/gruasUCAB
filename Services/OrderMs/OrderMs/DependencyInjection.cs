@@ -3,16 +3,19 @@ using OrderMs.Core.Database;
 using OrderMs.Core.Repositories;
 using OrderMs.Infrastructure.Database;
 using OrderMs.Infrastructure.Repositories;
+using OrderMS;
+
 
 namespace OrderMs
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddPresentation(this IServiceCollection services)
+        public static IServiceCollection AddPresentation(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers();
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddSwaggerGenWithAuth(configuration);
+            services.KeycloakConfiguration(configuration);
 
             //* Sin los Scope no funciona!!
             services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
