@@ -27,11 +27,10 @@ services:
     ports:
       - 18082:18082
     environment:
-  
       - ASPNETCORE_ENVIRONMENT=Development
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
-  
+
   providerms:
     image: providerms
     build:
@@ -56,11 +55,10 @@ services:
     ports:
       - 18084:18084
     environment:
-  
       - ASPNETCORE_ENVIRONMENT=Development
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
-  
+
   jobms:
     image: jobms
     build:
@@ -71,7 +69,20 @@ services:
     ports:
       - 18085:18085
     environment:
-  
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+
+  yarp:
+    image: yarp
+    build:
+      context: .
+      dockerfile: Gateway/Dockerfile
+      args:
+        - configuration=Debug
+    ports:
+      - 18086:18086
+    environment:
       - ASPNETCORE_ENVIRONMENT=Development
     volumes:
       - ~/.vsdbg:/remote_debugger:rw

@@ -2,69 +2,109 @@
 
 version: "3.4"
 
+networks:
+  gruas_ucab_network:
+    driver: bridge
+
 services:
   userms:
     image: userms
+    environment:
+      - DOTNET_ENVIRONMENT=Production
     build:
       context: .
       dockerfile: UserMs/UserMs/Dockerfile
     ports:
       - 18081:18081
+    networks:
+      - gruas_ucab_network
 
   orderms:
     image: orderms
+    environment:
+      - DOTNET_ENVIRONMENT=Production
     build:
       context: .
       dockerfile: OrderMs/OrderMs/Dockerfile
     ports:
       - 18082:18082
+    networks:
+      - gruas_ucab_network
 
   providerms:
     image: providerms
+    environment:
+      - DOTNET_ENVIRONMENT=Production
     build:
       context: .
       dockerfile: ProviderMs/ProviderMs/Dockerfile
     ports:
       - 18083:18083
+    networks:
+      - gruas_ucab_network
 
   authenticationms:
     image: authenticationms
+    environment:
+      - DOTNET_ENVIRONMENT=Production
     build:
       context: .
       dockerfile: AuthenticationMs/AuthenticationMs/Dockerfile
     ports:
       - 18084:18084
+    networks:
+      - gruas_ucab_network
 
   jobms:
     image: jobms
+    environment:
+      - DOTNET_ENVIRONMENT=Production
     build:
       context: .
       dockerfile: JobMs/JobMs/Dockerfile
     ports:
       - 18085:18085
-
-  postgres:
-    image: postgres:16
-    container_name: pg
+    networks:
+      - gruas_ucab_network
+  
+  yarp:
+    image: yarp
     environment:
-      - POSTGRES_DB=gruas_ucab
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=1234
+      - DOTNET_ENVIRONMENT=Production
+    build:
+      context: .
+      dockerfile: Gateway/Dockerfile
     ports:
-      - "5432:5432"
-    volumes:
-      - ./Database/postgresql:/var/lib/postgresql/data
+      - 18086:18086
+    networks:
+      - gruas_ucab_network
 
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=root@admin.com
-      - PGADMIN_DEFAULT_PASSWORD=1234
-    ports:
-      - "5050:80"
-    volumes:
-      - ./Database/pgadmin:/var/lib/pgadmin
+  # postgres:
+  #   image: postgres:16
+  #   container_name: pg
+  #   environment:
+  #     - POSTGRES_DB=gruas_ucab
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=1234
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - ./Database/postgresql:/var/lib/postgresql/data
+  #   networks:
+  #     - gruas_ucab_network
+
+  # pgadmin_ucab:
+  #   image: dpage/pgadmin4
+  #   container_name: pgadmin_ucab
+  #   environment:
+  #     - PGADMIN_DEFAULT_EMAIL=root@admin.com
+  #     - PGADMIN_DEFAULT_PASSWORD=1234
+  #   ports:
+  #     - "5050:80"
+  #   volumes:
+  #     - ./Database/pgadmin:/var/lib/pgadmin
+  #   networks:
+  #     - gruas_ucab_network
 
   keycloak:
     image: quay.io/keycloak/keycloak:latest
@@ -78,3 +118,5 @@ services:
       - ./Keycloak/identity:/opt/keycloak/data
     ports:
       - 18080:8080
+    networks:
+      - gruas_ucab_network

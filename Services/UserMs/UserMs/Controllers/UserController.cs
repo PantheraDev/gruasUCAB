@@ -11,7 +11,7 @@ namespace UserMs.Controllers
 
     [ApiController]
     [Route("user/users")]
-    [Authorize(Policy = "AdminOnly")]
+
     public class UsersController : ControllerBase
     {
         private readonly ILogger<UsersController> _logger;
@@ -23,6 +23,7 @@ namespace UserMs.Controllers
             _mediator = mediator;
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         public async Task<IActionResult> CreateUsers(CreateUsersDto createUsersDto)
         {
@@ -39,6 +40,7 @@ namespace UserMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
@@ -55,6 +57,7 @@ namespace UserMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminProviderOnly")]
         [HttpGet("{usersId}")]
         public async Task<IActionResult> GetUsersById([FromRoute] Guid usersId)
         {
@@ -72,6 +75,7 @@ namespace UserMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPut("{usersId}")]
         public async Task<IActionResult> UpdateUsers([FromRoute] Guid usersId, [FromBody] UpdateUsersDto usersDto)
         {
@@ -89,6 +93,7 @@ namespace UserMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpDelete("{usersId}")]
         public async Task<IActionResult> DeleteUsers(Guid usersId)
         {

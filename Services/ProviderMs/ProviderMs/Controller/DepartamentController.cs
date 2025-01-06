@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace ProviderMs.Controllers
 {
     [ApiController]
-    [Route("/departament")]
+    [Route("provider/departament")]
 
     public class DepartamentController : ControllerBase
     {

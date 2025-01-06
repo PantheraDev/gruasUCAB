@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace OrderMs.Controllers
 {
     [ApiController]
-    [Route("/insured-vehicle")]
+    [Route("order/insured-vehicle")]
     public class InsuredVehicleController : ControllerBase
     {
         private readonly ILogger<InsuredVehicleController> _logger;

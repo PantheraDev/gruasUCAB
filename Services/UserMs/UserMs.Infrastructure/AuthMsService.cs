@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using Microsoft.VisualBasic;
 using UserMs.Core.Interface;
 using UserMs.Domain.Entities;
@@ -13,13 +14,15 @@ namespace UserMs.Infrastructure
     {
         public readonly HttpClient _httpClient;
         public readonly IHttpContextAccessor _httpContextAccessor;
-        public AuthMsService(HttpClient httpClient, IHttpContextAccessor httpContextAccessor)
+        private readonly string _httpClientUrl;
+        public AuthMsService(HttpClient httpClient, IHttpContextAccessor httpContextAccessor, IOptions<HttpClientUrl> httpClientUrl)
         {
             _httpClient = httpClient;
             _httpContextAccessor = httpContextAccessor;
+            _httpClientUrl = httpClientUrl.Value.ApiUrl;
 
             var headerToken = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString()?.Replace("Bearer ", "");
-            _httpClient.BaseAddress = new Uri("http://localhost:18084/");
+            _httpClient.BaseAddress = new Uri(_httpClientUrl);
             _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {headerToken}");
 
         }
