@@ -12,14 +12,14 @@ using Microsoft.AspNetCore.Authorization;
 namespace ProviderMs.Controllers
 {
     [ApiController]
-    [Route("provider/departament")]
+    [Route("provider/department")]
 
-    public class DepartamentController : ControllerBase
+    public class DepartmentController : ControllerBase
     {
-        private readonly ILogger<DepartamentController> _logger;
+        private readonly ILogger<DepartmentController> _logger;
         private readonly IMediator _mediator;
 
-        public DepartamentController(ILogger<DepartamentController> logger, IMediator mediator)
+        public DepartmentController(ILogger<DepartmentController> logger, IMediator mediator)
         {
             _logger = logger;
             _mediator = mediator;
@@ -27,169 +27,169 @@ namespace ProviderMs.Controllers
 
         [Authorize(Policy = "AdminOnly")]
         [HttpPost]
-        public async Task<IActionResult> CreatedDepartament([FromBody] CreateDepartamentdto createDepartamentdto)
+        public async Task<IActionResult> CreatedDepartment([FromBody] CreateDepartmentdto createDepartmentdto)
         {
             try
             {
-                var command = new CreateDepartamentCommand(createDepartamentdto);
-                var DepartamentId = await _mediator.Send(command);
-                return Ok(DepartamentId);
+                var command = new CreateDepartmentCommand(createDepartmentdto);
+                var DepartmentId = await _mediator.Send(command);
+                return Ok(DepartmentId);
             }
-            catch (DepartamentNotFoundException e)
+            catch (DepartmentNotFoundException e)
             {
-                _logger.LogError("An error occurred while trying to create an Departament: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an Department: {Message}", e.Message);
                 return StatusCode(404, e.Message);
             }
             catch (NullAttributeException e)
             {
-                _logger.LogError("An error occurred while trying to create an Departament: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an Department: {Message}", e.Message);
                 return StatusCode(400, e.Message);
             }
             catch (InvalidAttributeException e)
             {
-                _logger.LogError("An error occurred while trying to create an Departament: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an Department: {Message}", e.Message);
                 return StatusCode(400, e.Message);
             }
             catch (ValidatorException e)
             {
-                _logger.LogError("An error occurred while trying to create an Departament: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an Department: {Message}", e.Message);
                 return StatusCode(400, e.Message);
             }
             catch (Exception e)
             {
-                _logger.LogError("An error occurred while trying to create an Departament: {Message}", e.Message);
-                return StatusCode(500, "An error occurred while trying to create an Departament");
+                _logger.LogError("An error occurred while trying to create an Department: {Message}", e.Message);
+                return StatusCode(500, "An error occurred while trying to create an Department");
             }
         }
 
         [Authorize(Policy = "AdminProviderOnly")]
         [HttpGet]
-        public async Task<IActionResult> GetAllDepartaments()
+        public async Task<IActionResult> GetAllDepartments()
         {
             try
             {
-                var query = new GetAllDepartamentsQuery();
-                var Departaments = await _mediator.Send(query);
-                return Ok(Departaments);
+                var query = new GetAllDepartmentsQuery();
+                var Departments = await _mediator.Send(query);
+                return Ok(Departments);
             }
-            catch (DepartamentNotFoundException e)
+            catch (DepartmentNotFoundException e)
             {
-                _logger.LogError("An error occurred while trying to create an Departament: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an Department: {Message}", e.Message);
                 return StatusCode(404, e.Message);
             }
             catch (NullAttributeException e)
             {
-                _logger.LogError("An error occurred while trying to create an Departament: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an Department: {Message}", e.Message);
                 return StatusCode(400, e.Message);
             }
             catch (InvalidAttributeException e)
             {
-                _logger.LogError("An error occurred while trying to create an Departament: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an Department: {Message}", e.Message);
                 return StatusCode(400, e.Message);
             }
             catch (Exception e)
             {
-                _logger.LogError("An error occurred while trying to search Departament: {Message}", e.Message);
-                return StatusCode(500, "An error occurred while trying to search Departament");
+                _logger.LogError("An error occurred while trying to search Department: {Message}", e.Message);
+                return StatusCode(500, "An error occurred while trying to search Department");
             }
         }
 
         [Authorize(Policy = "AdminProviderOnly")]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetDepartament([FromRoute] Guid id)
+        public async Task<IActionResult> GetDepartment([FromRoute] Guid id)
         {
             try
             {
-                var command = new GetDepartamentQuery(id);
-                var Departament = await _mediator.Send(command);
-                return Ok(Departament);
+                var command = new GetDepartmentQuery(id);
+                var Department = await _mediator.Send(command);
+                return Ok(Department);
             }
-            catch (DepartamentNotFoundException e)
+            catch (DepartmentNotFoundException e)
             {
-                _logger.LogError("An error occurred while trying to create an Departament: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an Department: {Message}", e.Message);
                 return StatusCode(404, e.Message);
             }
             catch (NullAttributeException e)
             {
-                _logger.LogError("An error occurred while trying to create an Departament: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an Department: {Message}", e.Message);
                 return StatusCode(400, e.Message);
             }
             catch (InvalidAttributeException e)
             {
-                _logger.LogError("An error occurred while trying to create an Departament: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an Department: {Message}", e.Message);
                 return StatusCode(400, e.Message);
             }
             catch (Exception e)
             {
-                _logger.LogError("An error occurred while trying to search an Departament: {Message}", e.Message);
-                return StatusCode(500, "An error occurred while trying to search an Departament");
+                _logger.LogError("An error occurred while trying to search an Department: {Message}", e.Message);
+                return StatusCode(500, "An error occurred while trying to search an Department");
             }
         }
 
         [Authorize(Policy = "AdminProviderOnly")]
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> UpdateDepartament([FromRoute] Guid id, [FromBody] UpdateDepartamentDto updateDepartamentDto)
+        public async Task<IActionResult> UpdateDepartment([FromRoute] Guid id, [FromBody] UpdateDepartmentDto updateDepartmentDto)
         {
             try
             {
-                var command = new UpdateDepartamentCommand(id, updateDepartamentDto);
-                var DepartamentId = await _mediator.Send(command);
-                return Ok(DepartamentId);
+                var command = new UpdateDepartmentCommand(id, updateDepartmentDto);
+                var DepartmentId = await _mediator.Send(command);
+                return Ok(DepartmentId);
             }
-            catch (DepartamentNotFoundException e)
+            catch (DepartmentNotFoundException e)
             {
-                _logger.LogError("An error occurred while trying to create an Departament: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an Department: {Message}", e.Message);
                 return StatusCode(404, e.Message);
             }
             catch (NullAttributeException e)
             {
-                _logger.LogError("An error occurred while trying to create an Departament: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an Department: {Message}", e.Message);
                 return StatusCode(400, e.Message);
             }
             catch (InvalidAttributeException e)
             {
-                _logger.LogError("An error occurred while trying to create an Departament: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an Department: {Message}", e.Message);
                 return StatusCode(400, e.Message);
             }
             catch (Exception e)
             {
-                _logger.LogError("An error occurred while trying to update an Departament: {Message}", e.Message);
-                return StatusCode(500, "An error occurred while trying to update an Departament");
+                _logger.LogError("An error occurred while trying to update an Department: {Message}", e.Message);
+                return StatusCode(500, "An error occurred while trying to update an Department");
             }
         }
 
         [Authorize(Policy = "AdminOnly")]
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IActionResult> DeleteDepartament([FromRoute] Guid id)
+        public async Task<IActionResult> DeleteDepartment([FromRoute] Guid id)
         {
             try
             {
-                var command = new DeleteDepartamentCommand(id);
-                var DepartamentId = await _mediator.Send(command);
-                return Ok(DepartamentId);
+                var command = new DeleteDepartmentCommand(id);
+                var DepartmentId = await _mediator.Send(command);
+                return Ok(DepartmentId);
             }
-            catch (DepartamentNotFoundException e)
+            catch (DepartmentNotFoundException e)
             {
-                _logger.LogError("An error occurred while trying to create an Departament: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an Department: {Message}", e.Message);
                 return StatusCode(404, e.Message);
             }
             catch (NullAttributeException e)
             {
-                _logger.LogError("An error occurred while trying to create an Departament: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an Department: {Message}", e.Message);
                 return StatusCode(400, e.Message);
             }
             catch (InvalidAttributeException e)
             {
-                _logger.LogError("An error occurred while trying to create an Departament: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an Department: {Message}", e.Message);
                 return StatusCode(400, e.Message);
             }
             catch (Exception e)
             {
                 //TODO: Colocar validaciones HTTP
-                _logger.LogError("An error occurred while trying to delete an Departament: {Message}", e.Message);
-                return StatusCode(500, "An error occurred while trying to delete an Departament");
+                _logger.LogError("An error occurred while trying to delete an Department: {Message}", e.Message);
+                return StatusCode(500, "An error occurred while trying to delete an Department");
             }
         }
 

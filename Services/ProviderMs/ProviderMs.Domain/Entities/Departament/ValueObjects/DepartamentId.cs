@@ -6,20 +6,20 @@ using ProviderMs.Common.Exceptions;
 
 namespace ProviderMs.Domain.ValueObjects
 {
-    public class DepartamentId
+    public class DepartmentId
 
     {
-        private DepartamentId(Guid value) => Value = value;
+        private DepartmentId(Guid value) => Value = value;
 
-        public static DepartamentId Create()
+        public static DepartmentId Create()
         {
-            return new DepartamentId(Guid.NewGuid());
+            return new DepartmentId(Guid.NewGuid());
         }
-        public static DepartamentId? Create(Guid value)
+        public static DepartmentId? Create(Guid value)
         {
-            if (value == Guid.Empty) throw new NullAttributeException("Departament id is required");
+            if (value == Guid.Empty) throw new NullAttributeException("Department id is required");
 
-            return new DepartamentId(value);
+            return new DepartmentId(value);
         }
 
         public Guid Value { get; init; }

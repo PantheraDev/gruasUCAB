@@ -7,11 +7,11 @@ using ProviderMs.Common.dto.Response;
 
 namespace ProviderMs.Application.Queries
 {
-    public class GetDepartamentQuery : IRequest<GetDepartament>
+    public class GetDepartmentQuery : IRequest<GetDepartment>
     {
         public Guid Id { get; set; }
 
-        public GetDepartamentQuery(Guid id)
+        public GetDepartmentQuery(Guid id)
         {
             Id = id;
         }

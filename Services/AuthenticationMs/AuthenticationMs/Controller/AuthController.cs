@@ -38,20 +38,20 @@ namespace AuthenticationMs
             }
         }
 
-        // [HttpPost("logout")]
-        // public async Task<IActionResult> LogOutAsync([FromBody] TokenDto token)
-        // {
-        //     try
-        //     {
-        //         var result = await _keycloakRepository.LogOutAsync(token.RefreshToken, token.AuthToken);
-        //         return Ok(result);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         _logger.LogError(ex, "Controller error");
-        //         return StatusCode(500, ex.Message);
-        //     }
-        // }
+        [HttpPost("logout")]
+        public async Task<IActionResult> LogOutAsync()
+        {
+            try
+            {
+                var result = await _keycloakRepository.LogOutAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Controller error");
+                return StatusCode(500, ex.Message);
+            }
+        }
 
         // [Authorize(Policy = "AdminOnly")]
         // [HttpPost("token")]

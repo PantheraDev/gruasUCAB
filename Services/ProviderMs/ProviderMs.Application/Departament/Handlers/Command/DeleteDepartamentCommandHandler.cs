@@ -12,22 +12,22 @@ using ProviderMs.Domain.ValueObjects;
 namespace ProviderMs.Application.Command
 {
     //TODO: Aqui utilizo un record en lugar de clase
-    public class DeleteDepartamentCommandHandler : IRequestHandler<DeleteDepartamentCommand, Guid>
+    public class DeleteDepartmentCommandHandler : IRequestHandler<DeleteDepartmentCommand, Guid>
     {
-        private readonly IDepartamentRepository _DepartamentRepository;
-        public DeleteDepartamentCommandHandler(IDepartamentRepository DepartamentRepository)
+        private readonly IDepartmentRepository _DepartmentRepository;
+        public DeleteDepartmentCommandHandler(IDepartmentRepository DepartmentRepository)
         {
-            _DepartamentRepository = DepartamentRepository ?? throw new ArgumentNullException(nameof(DepartamentRepository)); //*Valido que estas inyecciones sean exitosas
+            _DepartmentRepository = DepartmentRepository ?? throw new ArgumentNullException(nameof(DepartmentRepository)); //*Valido que estas inyecciones sean exitosas
         }
 
-        public async Task<Guid> Handle(DeleteDepartamentCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(DeleteDepartmentCommand request, CancellationToken cancellationToken)
         {
 
             try
             {
-                var departamentId = DepartamentId.Create(request.DepartamentId);
-                await _DepartamentRepository.DeleteAsync(departamentId!);
-                return departamentId!.Value;
+                var departmentId = DepartmentId.Create(request.DepartmentId);
+                await _DepartmentRepository.DeleteAsync(departmentId!);
+                return departmentId!.Value;
             }
             catch (Exception ex)
             {

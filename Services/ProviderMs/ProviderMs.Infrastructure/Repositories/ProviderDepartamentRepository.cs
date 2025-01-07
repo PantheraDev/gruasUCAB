@@ -7,42 +7,62 @@ using ProviderMs.Domain.ValueObjects;
 
 namespace ProviderMs.Infrastructure.Repositories
 {
-    public class ProviderDepartamentRepository : IProviderDepartamentRepository
+    public class ProviderDepartmentRepository : IProviderDepartmentRepository
     {
         private readonly IApplicationDbContext _dbContext;
 
-        public ProviderDepartamentRepository(IApplicationDbContext dbContext)
+        public ProviderDepartmentRepository(IApplicationDbContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
-        public async Task<List<ProviderDepartament?>> GetByProviderIdAsync(ProviderId id)
+        public async Task<ProviderDepartment?> GetByIdAsync(ProviderDepartmentId id /*Expression<Func<Provider, object>> include*/)
         {
-            var providerDepartaments = await _dbContext.ProviderDepartaments.Where(x => x.ProviderId == id).ToListAsync();
-
-            // Opcional: Eliminar o modificar el Console.WriteLine
-            Console.WriteLine("Cantidad de ProviderDepartaments encontrados: " + providerDepartaments.Count);
-
-            return providerDepartaments;
+            var providerDepartment = await _dbContext.ProviderDepartments.FirstOrDefaultAsync(x => x.Id == id);
+            //TODO: Borrar todos los console
+            return providerDepartment;
         }
-        public async Task<List<ProviderDepartament?>> GetAllAsync()
-        {
-            var providerDepartaments = await _dbContext.ProviderDepartaments.ToListAsync();
-            return providerDepartaments;
-        }
-        public async Task<ProviderDepartament?> UpdateAsync(ProviderDepartament providerDepartament)
-        {
-            _dbContext.ProviderDepartaments.Update(providerDepartament);
-            await _dbContext.SaveEfContextChanges("");
-            return providerDepartament;
-        }
-        public async Task DeleteAsync(ProviderId providerId, DepartamentId departamentId)
-        {
-            var providerDepartament = await _dbContext.ProviderDepartaments.FirstOrDefaultAsync(x => x.ProviderId == providerId && x.DepartamentId == departamentId);
-            if (providerDepartament == null) throw new DepartamentNotFoundException("ProviderDepartament not found");
 
-            providerDepartament.IsDeleted = true;
+        public async Task<List<ProviderDepartment?>> GetByProviderAsync(ProviderId providerId /*Expression<Func<Provider, object>> include*/)
+        {
+            var providerDepartment = await _dbContext.ProviderDepartments.Where(x => x.ProviderId == providerId).ToListAsync();
+            //TODO: Borrar todos los console
+            return providerDepartment!;
+        }
+
+        public async Task<List<ProviderDepartment?>> GetAllAsync()
+        {
+            var providerDepartments = await _dbContext.ProviderDepartments.ToListAsync();
+            return providerDepartments!;
+        }
+
+        public async Task AddAsync(ProviderDepartment providerDepartment)
+        {
+            await _dbContext.ProviderDepartments.AddAsync(providerDepartment);
             await _dbContext.SaveEfContextChanges("");
         }
+
+        public async Task<ProviderDepartment> UpdateAsync(ProviderDepartment oldProviderDepartmentm, ProviderDepartment newProviderDepartment)
+        {
+            _dbContext.ProviderDepartments.Remove(oldProviderDepartmentm);
+            var newId = this.AddAsync(newProviderDepartment);
+            return newProviderDepartment;
+        }
+
+        public async Task DeleteAsync(ProviderDepartmentId id)
+        {
+            var providerDepartment = await _dbContext.ProviderDepartments.FirstOrDefaultAsync(x => x.Id == id);
+            if (providerDepartment == null) throw new DepartmentNotFoundException("ProviderDepartment not found");
+
+            providerDepartment.IsDeleted = true;
+            await _dbContext.SaveEfContextChanges("");
+        }
+
+        public async Task<bool> RelationExistAsync(ProviderId providerId, DepartmentId departmentId)
+        {
+            var providerDepartment = await _dbContext.ProviderDepartments.FirstOrDefaultAsync(x => x.ProviderId == providerId && x.DepartmentId == departmentId && x.IsDeleted == false);
+            return providerDepartment != null;
+        }
+
     }
 }

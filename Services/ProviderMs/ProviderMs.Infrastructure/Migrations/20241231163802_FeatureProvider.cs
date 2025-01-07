@@ -12,7 +12,7 @@ namespace ProviderMs.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Departament",
+                name: "Department",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -25,7 +25,7 @@ namespace ProviderMs.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Departament", x => x.Id);
+                    table.PrimaryKey("PK_Department", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -50,11 +50,12 @@ namespace ProviderMs.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProviderDepartaments",
+                name: "ProviderDepartments",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ProviderId = table.Column<Guid>(type: "uuid", nullable: false),
-                    DepartamentId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DepartmentId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -63,19 +64,13 @@ namespace ProviderMs.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProviderDepartaments", x => new { x.ProviderId, x.DepartamentId });
+                    table.PrimaryKey("PK_ProviderDepartments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProviderDepartaments_Departament_DepartamentId",
-                        column: x => x.DepartamentId,
-                        principalTable: "Departament",
+                        name: "FK_ProviderDepartments_Department_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Department",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ProviderDepartaments_Provider_ProviderId",
-                        column: x => x.ProviderId,
-                        principalTable: "Provider",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -89,7 +84,7 @@ namespace ProviderMs.Infrastructure.Migrations
                     Brand = table.Column<string>(type: "text", nullable: false),
                     LicensePlate = table.Column<string>(type: "text", nullable: false),
                     TowLocation = table.Column<string>(type: "text", nullable: false),
-                    TowAvailability = table.Column<bool>(type: "boolean", nullable: false),
+                    TowAvailability = table.Column<string>(type: "text", nullable: false),
                     TowType = table.Column<string>(type: "text", nullable: false),
                     ProviderId = table.Column<Guid>(type: "uuid", nullable: false),
                     TowDriver = table.Column<Guid>(type: "uuid", nullable: false),
@@ -111,9 +106,9 @@ namespace ProviderMs.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProviderDepartaments_DepartamentId",
-                table: "ProviderDepartaments",
-                column: "DepartamentId");
+                name: "IX_ProviderDepartments_DepartmentId",
+                table: "ProviderDepartments",
+                column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tows_ProviderId",
@@ -125,13 +120,13 @@ namespace ProviderMs.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ProviderDepartaments");
+                name: "ProviderDepartments");
 
             migrationBuilder.DropTable(
                 name: "Tows");
 
             migrationBuilder.DropTable(
-                name: "Departament");
+                name: "Department");
 
             migrationBuilder.DropTable(
                 name: "Provider");

@@ -1,14 +1,16 @@
 namespace ProviderMs.Common.dto.Response
 {
-    public class GetProviderDepartament
+    public class GetProviderDepartment
     {
+        public Guid Id { get; set; }
         public Guid ProviderId { get; set; }
-        public Guid DepartamentId { get; set; }
+        public Guid DepartmentId { get; set; }
 
-        public GetProviderDepartament(Guid providerId, Guid departamentId)
+        public GetProviderDepartment(Guid id, Guid providerId, Guid departmentId)
         {
+            Id = id;
             ProviderId = providerId;
-            DepartamentId = departamentId;
+            DepartmentId = departmentId;
         }
     }
 }

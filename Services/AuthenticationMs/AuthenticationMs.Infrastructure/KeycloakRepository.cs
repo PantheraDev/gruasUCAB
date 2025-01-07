@@ -1,4 +1,5 @@
 
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Text;
 using System.Text.Json;
@@ -70,29 +71,30 @@ namespace AuthenticationMs.Infrastructure
             return content;
         }
 
-        /*public async Task<string> LogOutAsync(string refreshToken, string authToken)
+        public async Task<string> LogOutAsync()
         {
             //* MANEJA EL TOKEN DEL HEADER
             var headerToken = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString()?.Replace("Bearer ", "");
             var accessToken = new JwtSecurityTokenHandler().ReadToken(headerToken) as JwtSecurityToken;
             var userId = accessToken!.Payload["sub"];
+            var client = accessToken!.Payload["azp"];
 
-            _httpClient.BaseAddress = new Uri("http://localhost:18080/");
-            _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {authToken}");
+            // _httpClient.BaseAddress = new Uri("http://localhost:18080/");
+            // _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {authToken}");
 
             var response = await _httpClient.PostAsync($"admin/realms/auth/users/{userId}/logout",
             new FormUrlEncodedContent(new Dictionary<string, string>
             {
-                {"refresh_token", refreshToken },
-                { "client_id", "web-client" },
-                {"client_secret", "REdOcKznwuvtZ54jVVt9ebc3nCz6uqMy" }
+                // {"refresh_token", refreshToken },
+                // { "client_id", $"{client}" },
+                //{"client_secret", "REdOcKznwuvtZ54jVVt9ebc3nCz6uqMy" }
              }));
 
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
             return content;
 
-        }*/
+        }
 
 
 

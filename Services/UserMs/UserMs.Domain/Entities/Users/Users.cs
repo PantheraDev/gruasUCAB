@@ -3,8 +3,8 @@ namespace UserMs.Domain.Entities
     public class Users : Base
     {
         public UsersType UsersType { get; private set; }
-        public Users(UserId userId, UserEmail userEmail, UserPassword userPassword, UserProvider userProvider, UserDepartament userDepartament, UsersType usersType)
-            : base(userId, userEmail, userPassword, userProvider, userDepartament)
+        public Users(UserId userId, UserEmail userEmail, UserPassword userPassword,UserDepartament userDepartament, UsersType usersType)
+            : base(userId, userEmail, userPassword, userDepartament)
         {
             UsersType = usersType;
         }

@@ -12,27 +12,27 @@ using ProviderMs.Domain.ValueObjects;
 
 namespace ProviderMs.Application.Handlers.Queries
 {
-    public class GetDepartamentQueryHandler : IRequestHandler<GetDepartamentQuery, GetDepartament>
+    public class GetDepartmentQueryHandler : IRequestHandler<GetDepartmentQuery, GetDepartment>
     {
-        public IDepartamentRepository _departamentRepository;
+        public IDepartmentRepository _departmentRepository;
 
-        public GetDepartamentQueryHandler(IDepartamentRepository departamentRepository)
+        public GetDepartmentQueryHandler(IDepartmentRepository departmentRepository)
         {
-            _departamentRepository = departamentRepository;
+            _departmentRepository = departmentRepository;
         }
 
-        public async Task<GetDepartament> Handle(GetDepartamentQuery request, CancellationToken cancellationToken)
+        public async Task<GetDepartment> Handle(GetDepartmentQuery request, CancellationToken cancellationToken)
         {
-            if (request.Id == Guid.Empty) throw new NullAttributeException("departament id is required");
-            var departamentId = DepartamentId.Create(request.Id);
-            var departament = await _departamentRepository.GetByIdAsync(departamentId!);
+            if (request.Id == Guid.Empty) throw new NullAttributeException("department id is required");
+            var departmentId = DepartmentId.Create(request.Id);
+            var department = await _departmentRepository.GetByIdAsync(departmentId!);
 
-            if (departament == null || departament.IsDeleted) throw new ProviderNotFoundException("departament not found");
+            if (department == null || department.IsDeleted) throw new ProviderNotFoundException("department not found");
 
-            return new GetDepartament(
-                departament.Id.Value,
-                departament.Name.Value,
-                departament.CreatedBy
+            return new GetDepartment(
+                department.Id.Value,
+                department.Name.Value,
+                department.CreatedBy
             );
         }
     }

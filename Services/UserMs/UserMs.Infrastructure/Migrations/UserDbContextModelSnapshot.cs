@@ -63,9 +63,6 @@ namespace UserMs.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("UserProvider")
-                        .HasColumnType("uuid");
-
                     b.HasKey("UserId");
 
                     b.HasIndex("DriverLicenseId")
@@ -129,9 +126,6 @@ namespace UserMs.Infrastructure.Migrations
                     b.Property<string>("UserPassword")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<Guid>("UserProvider")
-                        .HasColumnType("uuid");
 
                     b.Property<string>("UsersType")
                         .IsRequired()

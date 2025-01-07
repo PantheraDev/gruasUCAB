@@ -35,12 +35,11 @@ namespace UserMs.Application.Handlers.Drives.Commands
                     throw new NullAtributeException("DriverAvailable must be between 0 and 1");
                 }
 
-                existingDriver.SetUserEmail(UserEmail.Create(request.Driver.UserEmail.Value));
-                existingDriver.SetUserPassword(UserPassword.Create(request.Driver.UserPassword.Value));
-                existingDriver.SetUserProvider(UserProvider.Create(request.Driver.UserProvider.Value));
-                existingDriver.SetUserDepartament(UserDepartament.Create(request.Driver.UserDepartament.Value));
+                existingDriver.SetUserEmail(UserEmail.Create(request.Driver.UserEmail!));
+                existingDriver.SetUserPassword(UserPassword.Create(request.Driver.UserPassword!));
+                existingDriver.SetUserDepartament(UserDepartament.Create(request.Driver.UserDepartament!.Value));
                 existingDriver.SetDriverAvailable(request.Driver.DriverAvailable);
-                existingDriver.SetDriverLicenseId(LicenseId.Create(request.Driver.DriverLicenseId.Value));
+                existingDriver.SetDriverLicenseId(LicenseId.Create(request.Driver.DriverLicenseId!.Value));
 
                 await _authMsService.UpdateUser(existingDriver.UserId, existingDriver);
                 await _driverRepository.UpdateDriverAsync(request.UserId,existingDriver);

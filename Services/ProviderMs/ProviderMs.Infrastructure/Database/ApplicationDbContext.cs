@@ -30,10 +30,10 @@ namespace ProviderMs.Infrastructure.Database
         }
 
         public virtual DbSet<Provider> Providers { get; set; } = null!;
-        public virtual DbSet<Departament> Departaments {get; set;} = null!;
-        public virtual DbSet<Tow> Tows {get; set;} = null!;
+        public virtual DbSet<Department> Departments { get; set; } = null!;
+        public virtual DbSet<Tow> Tows { get; set; } = null!;
 
-        public virtual DbSet<ProviderDepartament> ProviderDepartaments {get; set;} = null;
+        public virtual DbSet<ProviderDepartment> ProviderDepartments { get; set; } = null;
 
 
         public IDbContextTransactionProxy BeginTransaction()

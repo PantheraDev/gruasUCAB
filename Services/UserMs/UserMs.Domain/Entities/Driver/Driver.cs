@@ -6,8 +6,8 @@ namespace UserMs.Domain.Entities
         public Licensed DriverLicense { get; private set; }
         public LicenseId DriverLicenseId { get; private set; }
 
-        public Driver(UserId userId, UserEmail userEmail, UserPassword userPassword, UserProvider userProvider, UserDepartament userDepartament, DriverAvailable driverAvailable, LicenseId driverLicenseId)
-            : base(userId, userEmail, userPassword, userProvider, userDepartament)
+        public Driver(UserId userId, UserEmail userEmail, UserPassword userPassword, UserDepartament userDepartament, DriverAvailable driverAvailable, LicenseId driverLicenseId)
+            : base(userId, userEmail, userPassword, userDepartament)
         {
             DriverAvailable = driverAvailable;
             DriverLicenseId = driverLicenseId;

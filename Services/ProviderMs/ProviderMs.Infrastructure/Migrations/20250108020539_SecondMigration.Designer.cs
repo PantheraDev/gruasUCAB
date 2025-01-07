@@ -12,8 +12,8 @@ using ProviderMs.Infrastructure.Database;
 namespace ProviderMs.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241229192423_FeatureProvider")]
-    partial class FeatureProvider
+    [Migration("20250108020539_SecondMigration")]
+    partial class SecondMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,22 @@ namespace ProviderMs.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ProviderMs.Domain.Entities.Departament", b =>
+            modelBuilder.Entity("DepartmentProvider", b =>
+                {
+                    b.Property<Guid>("DepartmentsId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ProvidersId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("DepartmentsId", "ProvidersId");
+
+                    b.HasIndex("ProvidersId");
+
+                    b.ToTable("DepartmentProvider");
+                });
+
+            modelBuilder.Entity("ProviderMs.Domain.Entities.Department", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -43,6 +58,9 @@ namespace ProviderMs.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid>("ProviderId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -51,7 +69,7 @@ namespace ProviderMs.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departament", (string)null);
+                    b.ToTable("Department", (string)null);
                 });
 
             modelBuilder.Entity("ProviderMs.Domain.Entities.Provider", b =>
@@ -68,6 +86,9 @@ namespace ProviderMs.Infrastructure.Migrations
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
+
+                    b.Property<Guid>("DepartmentId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -99,12 +120,9 @@ namespace ProviderMs.Infrastructure.Migrations
                     b.ToTable("Provider", (string)null);
                 });
 
-            modelBuilder.Entity("ProviderMs.Domain.Entities.ProviderDepartament", b =>
+            modelBuilder.Entity("ProviderMs.Domain.Entities.ProviderDepartment", b =>
                 {
-                    b.Property<Guid>("ProviderId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("DepartamentId")
+                    b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
@@ -113,8 +131,14 @@ namespace ProviderMs.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
+                    b.Property<Guid>("DepartmentId")
+                        .HasColumnType("uuid");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
+
+                    b.Property<Guid>("ProviderId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -122,11 +146,11 @@ namespace ProviderMs.Infrastructure.Migrations
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("text");
 
-                    b.HasKey("ProviderId", "DepartamentId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("DepartamentId");
+                    b.HasIndex("DepartmentId");
 
-                    b.ToTable("ProviderDepartaments", (string)null);
+                    b.ToTable("ProviderDepartments", (string)null);
                 });
 
             modelBuilder.Entity("ProviderMs.Domain.Entities.Tow", b =>
@@ -162,8 +186,9 @@ namespace ProviderMs.Infrastructure.Migrations
                     b.Property<Guid>("ProviderId")
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("TowAvailability")
-                        .HasColumnType("boolean");
+                    b.Property<string>("TowAvailability")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<Guid>("TowDriver")
                         .HasColumnType("uuid");
@@ -193,23 +218,28 @@ namespace ProviderMs.Infrastructure.Migrations
                     b.ToTable("Tows", (string)null);
                 });
 
-            modelBuilder.Entity("ProviderMs.Domain.Entities.ProviderDepartament", b =>
+            modelBuilder.Entity("DepartmentProvider", b =>
                 {
-                    b.HasOne("ProviderMs.Domain.Entities.Departament", "Departament")
-                        .WithMany("ProviderDepartaments")
-                        .HasForeignKey("DepartamentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("ProviderMs.Domain.Entities.Department", null)
+                        .WithMany()
+                        .HasForeignKey("DepartmentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProviderMs.Domain.Entities.Provider", "Provider")
-                        .WithMany("ProviderDepartaments")
-                        .HasForeignKey("ProviderId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("ProviderMs.Domain.Entities.Provider", null)
+                        .WithMany()
+                        .HasForeignKey("ProvidersId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
-                    b.Navigation("Departament");
-
-                    b.Navigation("Provider");
+            modelBuilder.Entity("ProviderMs.Domain.Entities.ProviderDepartment", b =>
+                {
+                    b.HasOne("ProviderMs.Domain.Entities.Department", null)
+                        .WithMany("ProviderDepartments")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ProviderMs.Domain.Entities.Tow", b =>
@@ -223,15 +253,13 @@ namespace ProviderMs.Infrastructure.Migrations
                     b.Navigation("provider");
                 });
 
-            modelBuilder.Entity("ProviderMs.Domain.Entities.Departament", b =>
+            modelBuilder.Entity("ProviderMs.Domain.Entities.Department", b =>
                 {
-                    b.Navigation("ProviderDepartaments");
+                    b.Navigation("ProviderDepartments");
                 });
 
             modelBuilder.Entity("ProviderMs.Domain.Entities.Provider", b =>
                 {
-                    b.Navigation("ProviderDepartaments");
-
                     b.Navigation("Tows");
                 });
 #pragma warning restore 612, 618

@@ -13,30 +13,32 @@ using ProviderMs.Domain.ValueObjects;
 
 namespace ProviderMs.Application.Command
 {
-    public class CreateDepartamentCommandHandler : IRequestHandler<CreateDepartamentCommand, Guid>
+    public class CreateDepartmentCommandHandler : IRequestHandler<CreateDepartmentCommand, Guid>
     {
-        private readonly IDepartamentRepository _departamentRepository;
+        private readonly IDepartmentRepository _departmentRepository;
 
-        public CreateDepartamentCommandHandler(IDepartamentRepository departamentRepository)
+        public CreateDepartmentCommandHandler(IDepartmentRepository departmentRepository)
         {
-            _departamentRepository = departamentRepository;
+            _departmentRepository = departmentRepository;
         }
-       public async Task<Guid> Handle(CreateDepartamentCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateDepartmentCommand request, CancellationToken cancellationToken)
         {
-            try{
-            var validator = new CreateDepartamentValidator();
-            await validator.ValidateRequest(request.Departament);
-            var departamentId = DepartamentId.Create(Guid.NewGuid());
-            var departamentName = DepartamentName.Create(request.Departament.Name);
-            var departament = new Departament(departamentId, departamentName);
-            await _departamentRepository.AddAsync(departament);
-            return departament.Id.Value;
+            try
+            {
+                var validator = new CreateDepartmentValidator();
+                await validator.ValidateRequest(request.Department);
+                var departmentId = DepartmentId.Create(Guid.NewGuid());
+                var departmentName = DepartmentName.Create(request.Department.Name);
+                var department = new Department(departmentId, departmentName);
+                await _departmentRepository.AddAsync(department);
+                return department.Id.Value;
 
             }
-            catch(Exception ex){
+            catch (Exception ex)
+            {
                 throw;
             }
         }
-        
+
     }
 }

@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace ProviderMs.Common.Exceptions
 {
-    public class DepartamentNotFoundException : Exception
+    public class DepartmentNotFoundException : Exception
     {
-        public DepartamentNotFoundException() { }
+        public DepartmentNotFoundException() { }
 
-        public DepartamentNotFoundException(string message)
+        public DepartmentNotFoundException(string message)
             : base(message) { }
 
-        public DepartamentNotFoundException(string message, Exception inner)
+        public DepartmentNotFoundException(string message, Exception inner)
             : base(message, inner) { }
     }
 }

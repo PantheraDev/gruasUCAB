@@ -4,11 +4,11 @@ using ProviderMs.Application.Validators;
 
 namespace ProviderMs.Application.Validators
 {
-    public class CreateDepartamentValidator : ValidatorBase<CreateDepartamentdto>
+    public class CreateDepartmentValidator : ValidatorBase<CreateDepartmentdto>
     {
-        public CreateDepartamentValidator()
+        public CreateDepartmentValidator()
         {
-            RuleFor(s => s.Name).NotNull().NotEmpty().WithMessage("No puede ser nulo").WithErrorCode("654");     
+            RuleFor(s => s.Name).NotNull().NotEmpty().WithMessage("No puede ser nulo").WithErrorCode("654");
         }
     }
 }

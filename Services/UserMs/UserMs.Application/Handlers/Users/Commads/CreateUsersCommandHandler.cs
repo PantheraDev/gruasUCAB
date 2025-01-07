@@ -34,10 +34,9 @@ namespace UserMs.Application.Handlers.User.Commands
                                     return new string(Enumerable.Repeat(validChars, 8)
                                         .Select(s => s[random.Next(s.Length)]).ToArray());
                                 };
-                var usersEmailValue = request.Users.UserEmail?.Value;
+                var usersEmailValue = request.Users.UserEmail;
                 var usersPasswordValue = generatePassword();
-                var usersProviderValue = request.Users.UserProvider?.Value;
-                var usersDepartamentValue = request.Users.UserDepartament?.Value;
+                var usersDepartamentValue = request.Users.ProviderDepartmentId;
 
                 await _authMsService.CreateUserAsync(usersEmailValue!, usersPasswordValue);
                 var userId = await _authMsService.GetUserByUserName(UserEmail.Create(usersEmailValue!));
@@ -47,8 +46,7 @@ namespace UserMs.Application.Handlers.User.Commands
                     UserId.Create(userId),
                     UserEmail.Create(usersEmailValue ?? string.Empty),
                     UserPassword.Create(usersPasswordValue ?? string.Empty),
-                    UserProvider.Create(usersProviderValue.Value),
-                    UserDepartament.Create(usersDepartamentValue.Value),
+                    UserDepartament.Create(usersDepartamentValue),
                     Enum.Parse<UsersType>(request.Users.UsersType!)
                 );
 

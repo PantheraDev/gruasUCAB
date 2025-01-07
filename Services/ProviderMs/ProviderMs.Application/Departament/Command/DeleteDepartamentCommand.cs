@@ -7,13 +7,13 @@ using ProviderMs.Common.dto.Request;
 
 namespace ProviderMs.Application.Command
 {
-    public class DeleteDepartamentCommand : IRequest<Guid>
+    public class DeleteDepartmentCommand : IRequest<Guid>
     {
-        public Guid DepartamentId { get; set; }
+        public Guid DepartmentId { get; set; }
 
-        public DeleteDepartamentCommand(Guid departament)
+        public DeleteDepartmentCommand(Guid department)
         {
-            DepartamentId = departament;
+            DepartmentId = department;
         }
     }
 }

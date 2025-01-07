@@ -13,13 +13,11 @@ namespace ProviderMs.Common.dto.Response
         public string Email { get; set; }
         public string RIF { get; set; }
         public string Address { get; set; }
-        //public List<ProviderDepartamentDto> providerDepartaments {get; init;}
-        public List<Guid>? DepartamentIds { get; init; }
         public string? Createdby {get; set;}
         
 
 
-        public GetProvider(Guid id, string name, string phoneNumber, string email, string rif, string address,List<Guid> departamentId/*List<ProviderDepartamentDto> providerDepartamentDtos*/, string? createdBy)
+        public GetProvider(Guid id, string name, string phoneNumber, string email, string rif, string address, string? createdBy)
         {
             Id = id;
             Name = name;
@@ -27,8 +25,6 @@ namespace ProviderMs.Common.dto.Response
             Email = email;
             RIF = rif;
             Address = address;
-           // providerDepartaments = providerDepartamentDtos;
-            DepartamentIds = departamentId;
             Createdby = createdBy;
         }
     }

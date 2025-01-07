@@ -3,11 +3,14 @@ using ProviderMs.Domain.ValueObjects;
 
 namespace ProviderMs.Core.Repository
 {
-    public interface IProviderDepartamentRepository
+    public interface IProviderDepartmentRepository
     {
-        Task<List<ProviderDepartament?>> GetByProviderIdAsync(ProviderId id); 
-        Task<List<ProviderDepartament?>> GetAllAsync();
-        Task<ProviderDepartament?> UpdateAsync(ProviderDepartament providerDepartament);
-        Task DeleteAsync(ProviderId providerId, DepartamentId departamentId);
+        Task<ProviderDepartment?> GetByIdAsync(ProviderDepartmentId id);
+        Task<List<ProviderDepartment?>> GetAllAsync();
+        Task<List<ProviderDepartment?>> GetByProviderAsync(ProviderId providerId);
+        Task AddAsync(ProviderDepartment providerDepartment);
+        Task<ProviderDepartment> UpdateAsync(ProviderDepartment providerDepartment, ProviderDepartment newProviderDepartment);
+        Task DeleteAsync(ProviderDepartmentId id);
+        Task<bool> RelationExistAsync(ProviderId providerId, DepartmentId departmentId);
     }
 }

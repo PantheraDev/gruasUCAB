@@ -33,7 +33,6 @@ namespace ProviderMs.Infrastructure.Repositories
             var provider = await _dbContext.Providers.FirstOrDefaultAsync(x => x.Id == id);
             //TODO: Borrar todos los console
             return provider;
-            
         }
         public async Task<List<Provider>> GetAllAsync()
         {
@@ -45,18 +44,10 @@ namespace ProviderMs.Infrastructure.Repositories
 
         public async Task DeleteAsync(ProviderId id)
         {
-            var providerDepartaments = await _dbContext.ProviderDepartaments
-                .Where(pd => pd.ProviderId == id) // Solo obtener los no eliminados
-                .ToListAsync();
+            var provider = await _dbContext.Providers.FirstOrDefaultAsync(x => x.Id == id);
+            if (provider == null) throw new ProviderNotFoundException("provider not found");
 
-            foreach (var providerDepartament in providerDepartaments)
-            {
-                providerDepartament.IsDeleted = true;
-            }
-
-            var provider = await _dbContext.Providers.FindAsync(id); // Más eficiente que FirstOrDefaultAsync por Id
-            if (provider != null) provider.IsDeleted = true; // Solo si se encuentra el proveedor
-
+            provider.IsDeleted = true;
             await _dbContext.SaveEfContextChanges("");
         }
 

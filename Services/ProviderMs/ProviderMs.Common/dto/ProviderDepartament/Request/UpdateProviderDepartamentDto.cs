@@ -1,8 +1,8 @@
 namespace ProviderMs.Common.dto.Request
 {
-    public record UpdateProviderDepartamentDto
+    public record UpdateProviderDepartmentDto
     {
         public Guid? ProviderId { get; init; }
-        public Guid DepartamentId { get; init; }
+        public Guid? DepartmentId { get; init; }
     }
 }

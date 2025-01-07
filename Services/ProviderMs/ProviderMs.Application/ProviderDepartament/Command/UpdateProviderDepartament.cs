@@ -3,15 +3,15 @@ using ProviderMs.Common.dto.Request;
 
 namespace ProviderMs.Application.Command
 {
-    public class UpdateProviderDepartamentCommand : IRequest<Guid>
+    public class UpdateProviderDepartmentCommand : IRequest<Guid>
     {
-        public Guid DepartamentId { get; set; }
-        public UpdateProviderDepartamentDto ProviderDepartament { get; set; }
+        public Guid Id { get; set; }
+        public UpdateProviderDepartmentDto ProviderDepartment { get; set; }
 
-        public UpdateProviderDepartamentCommand(Guid providerId, Guid departamentId, UpdateProviderDto provider)
+        public UpdateProviderDepartmentCommand(Guid id, UpdateProviderDepartmentDto providerDepartment)
         {
-            ProviderDepartament = ProviderDepartament;
-            DepartamentId = departamentId;
+            ProviderDepartment = providerDepartment;
+            Id = id;
         }
     }
 }

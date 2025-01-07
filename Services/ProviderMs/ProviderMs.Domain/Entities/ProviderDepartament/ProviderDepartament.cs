@@ -1,27 +1,31 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Threading.Tasks;
 using ProviderMs.Common.Primitives;
 using ProviderMs.Domain.ValueObjects;
 
 namespace ProviderMs.Domain.Entities;
 
-    public class ProviderDepartament : AggregateRoot
+public class ProviderDepartment : AggregateRoot
+{
+    public ProviderDepartmentId Id { get; set; }
+    public ProviderId ProviderId { get; set; }
+    public Provider Provider { get; set; }
+    public DepartmentId DepartmentId { get; set; }
+    public Department Department { get; set; }
+
+    public ProviderDepartment(ProviderDepartmentId id, ProviderId providerId, DepartmentId departmentId)
     {
-        public ProviderId ProviderId {get; set;}
-        public Provider Provider {get; set;}
-        public DepartamentId DepartamentId {get;  set;}
-        public Departament Departament {get; set;}
-
-        public static ProviderDepartament Update(ProviderDepartament providerDepartament, DepartamentId? departamentId){
-
-            var updates = new List<Action>{
-                () => {if(departamentId !=null)providerDepartament.DepartamentId = departamentId;},
-            };
-            updates.ForEach(update => update());
-            return providerDepartament;
-        }
+        Id = id;
+        ProviderId = providerId;
+        DepartmentId = departmentId;
     }
+
+    public static ProviderDepartment Update(ProviderDepartment providerDepartment, ProviderId? providerId, DepartmentId? departmentId)
+    {
+
+        var updates = new List<Action>{
+                () => {if(providerId !=null)providerDepartment.ProviderId = providerId;},
+                () => {if(departmentId !=null)providerDepartment.DepartmentId = departmentId;},
+            };
+        updates.ForEach(update => update());
+        return providerDepartment;
+    }
+}

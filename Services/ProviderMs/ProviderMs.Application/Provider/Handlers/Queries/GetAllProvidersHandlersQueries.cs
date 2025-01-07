@@ -1,15 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MediatR;
 using ProviderMs.ApplicationQueries;
-using ProviderMs.Common.dto.Request;
 using ProviderMs.Common.dto.Response;
 using ProviderMs.Common.Exceptions;
 using ProviderMs.Core.Repository;
-using ProviderMs.Domain;
-using ProviderMs.Domain.ValueObjects;
 
 namespace ProviderMs.Application.Handlers.Queries
 {
@@ -36,7 +29,6 @@ namespace ProviderMs.Application.Handlers.Queries
                     p.Email.Value,
                     p.RIF.Value,
                     p.Address.Value,
-                    p.ProviderDepartaments?.Select(pd => pd.DepartamentId.Value).ToList() ?? new List<Guid>(),
                     p.CreatedBy ?? string.Empty
                 )
             ).ToList();

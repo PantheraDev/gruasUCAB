@@ -1,6 +1,5 @@
 using ProviderMs.Common.dto.Request;
 using FluentValidation;
-using ProviderMs.Application.Validators;
 
 namespace ProviderMs.Application.Validators
 {
@@ -12,9 +11,7 @@ namespace ProviderMs.Application.Validators
             RuleFor(s => s.PhoneNumber).NotNull().NotEmpty().WithMessage("No puede ser nulo").WithErrorCode("654");
             RuleFor(s => s.Email).NotNull().NotEmpty().WithMessage("No puede ser nulo").WithErrorCode("654");
             RuleFor(s => s.RIF).NotNull().NotEmpty().WithMessage("No puede ser nulo").WithErrorCode("654");
-            RuleFor(s => s.Address).NotNull().NotEmpty().WithMessage("No puede ser nulo").WithErrorCode("654");
-            RuleFor(s => s.DepartamentId).NotNull().NotEmpty().WithMessage("No puede ser nulo").WithErrorCode("654");
-            
+            RuleFor(s => s.Address).NotNull().NotEmpty().WithMessage("No puede ser nulo").WithErrorCode("654");  
         }
     }
 }
