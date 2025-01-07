@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace OrderMs.Controllers
 {
     [ApiController]
-    [Route("/client")]
+    [Route("order/client")]
 
     public class ClientController : ControllerBase
     {

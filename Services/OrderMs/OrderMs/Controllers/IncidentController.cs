@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace OrderMs.Controllers
 {
     [ApiController]
-    [Route("/incident")]
+    [Route("order/incident")]
     [Authorize(Policy = "AdminOperatorOnly")]
     public class IncidentController : ControllerBase
     {

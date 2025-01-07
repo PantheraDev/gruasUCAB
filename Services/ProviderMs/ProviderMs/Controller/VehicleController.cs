@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace ProviderMs.Controllers
 {
     [ApiController]
-    [Route("/tow")]
+    [Route("provider/tow")]
 
     public class TowController : ControllerBase
     {

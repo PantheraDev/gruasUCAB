@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace OrderMs.Controllers
 {
     [ApiController]
-    [Route("/additional-cost")]
+    [Route("order/additional-cost")]
     [Authorize(Policy = "AdminDriverOperatorOnly")]
     public class AdditionalCostController : ControllerBase
     {

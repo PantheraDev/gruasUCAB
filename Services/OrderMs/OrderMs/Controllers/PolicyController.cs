@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace OrderMs.Controllers
 {
     [ApiController]
-    [Route("/policy")]
+    [Route("order/policy")]
 
     public class PolicyController : ControllerBase
     {

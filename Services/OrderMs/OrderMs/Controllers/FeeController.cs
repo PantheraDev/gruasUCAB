@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace OrderMs.Controllers
 {
     [ApiController]
-    [Route("/fee")]
+    [Route("order/fee")]
 
     public class FeeController : ControllerBase
     {

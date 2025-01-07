@@ -2,6 +2,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 18085
 
+ENV DB_BUSINESS_CONNECTION_STRING="Host=gruas-ucab.postgres.database.azure.com;Port=5432;Database=jobms-dev;User Id=administrador;Password=Ae164tg=18"
+
 ENV ASPNETCORE_URLS=http://+:18085
 
 USER app

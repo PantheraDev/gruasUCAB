@@ -10,7 +10,7 @@ namespace AuthenticationMs
 
     [ApiController]
     [Route("auth")]
-    [Authorize(Policy = "AdminProviderOnly")]
+
 
     public class AuthController : ControllerBase
     {
@@ -23,20 +23,20 @@ namespace AuthenticationMs
             _keycloakRepository = keycloakRepository;
         }
 
-        // [HttpPost("login")]
-        // public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginDto)
-        // {
-        //     try
-        //     {
-        //         var token = await _keycloakRepository.LoginAsync(loginDto.Username, loginDto.Password);
-        //         return Ok(token);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         _logger.LogError(ex, "Controller error");
-        //         return StatusCode(500, ex.Message);
-        //     }
-        // }
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginDto)
+        {
+            try
+            {
+                var token = await _keycloakRepository.LoginAsync(loginDto.Username, loginDto.Password);
+                return Ok(token);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Controller error");
+                return StatusCode(500, ex.Message);
+            }
+        }
 
         // [HttpPost("logout")]
         // public async Task<IActionResult> LogOutAsync([FromBody] TokenDto token)
@@ -69,7 +69,7 @@ namespace AuthenticationMs
         //     }
         // }
 
-
+        [Authorize(Policy = "AdminProviderOnly")]
         [HttpPost("createUser")]
         public async Task<IActionResult> CreateUserAsync([FromBody] CreateUserDto user)
         {
@@ -95,7 +95,7 @@ namespace AuthenticationMs
             }
         }
 
-
+        [Authorize(Policy = "AdminProviderOnly")]
         [HttpDelete]
         [Route("deleteUser/{userId}")]
         public async Task<IActionResult> DeleteUserAsync([FromRoute] Guid userId)
@@ -122,7 +122,7 @@ namespace AuthenticationMs
             }
         }
 
-
+        [Authorize(Policy = "AdminProviderOnly")]
         [HttpGet("{username}")]
         public async Task<IActionResult> GetUserByUserNameAsync([FromRoute] string username)
         {
@@ -145,14 +145,15 @@ namespace AuthenticationMs
             }
         }
 
-
+        [Authorize(Policy = "AdminProviderOnly")]
         [HttpPost("assingRole")]
         public async Task<IActionResult> AssingRoleAsync([FromBody] AssingRoleDto role)
         {
             try
             {
-                if (role.ClientId == "webclient") await _keycloakRepository.AssignClientRoleToUser(role.UserId, role.ClientId, role.RoleName);
-                else await _keycloakRepository.AssignClientRoleToUserMobile(role.UserId, role.ClientId, role.RoleName);
+                await _keycloakRepository.AssignClientRoleToUser(role.UserId, role.ClientId, role.RoleName);
+                // if (role.ClientId == "webclient") await _keycloakRepository.AssignClientRoleToUser(role.UserId, role.ClientId, role.RoleName);
+                // else await _keycloakRepository.AssignClientRoleToUserMobile(role.UserId, role.ClientId, role.RoleName);
                 return Ok();
             }
             catch (KeycloakException ex)
@@ -166,7 +167,7 @@ namespace AuthenticationMs
                 return StatusCode(500, ex.Message);
             }
         }
-
+        [Authorize(Policy = "AdminProviderOnly")]
         [HttpPut("{id}")]
         public async Task<IActionResult> AssingRoleAsync([FromRoute] Guid id, [FromBody] UpdateUserDto user)
         {

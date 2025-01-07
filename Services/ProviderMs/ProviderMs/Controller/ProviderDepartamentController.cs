@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace ProviderMs.Controllers
 {
     [ApiController]
-    [Route("/providerDepartament")]
+    [Route("provider/providerDepartament")]
 
     public class ProviderDepartamentController : ControllerBase
     {

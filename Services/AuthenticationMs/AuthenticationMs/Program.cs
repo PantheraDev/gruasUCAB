@@ -11,6 +11,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGenWithAuth(builder.Configuration);
 builder.Services.KeycloakConfiguration(builder.Configuration);
 
+builder.Services.Configure<HttpClientUrl>(
+    builder.Configuration.GetSection("HttpClientAddress"));
 
 builder.Services.AddScoped<IKeycloakRepository, KeycloakRepository>();
 

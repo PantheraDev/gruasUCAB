@@ -35,6 +35,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGenWithAuth(builder.Configuration);
 builder.Services.KeycloakConfiguration(builder.Configuration);
 
+builder.Services.Configure<HttpClientUrl>(
+    builder.Configuration.GetSection("HttpClientAddress"));
+
 builder.Services.AddMediatR(typeof(CreateLicenseCommandHandler).Assembly);
 builder.Services.AddMediatR(typeof(GetLicenseQueryHandler).Assembly);
 builder.Services.AddMediatR(typeof(GetLicenseByIdQueryHandler).Assembly);
@@ -70,15 +73,21 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.Converters.Add(new UserProviderJsonConverter());
     options.JsonSerializerOptions.Converters.Add(new UserDepartamentJsonConverter());
 });
+//**********************************************************************************
+
+var BusinessConnectionString = Environment.GetEnvironmentVariable("DB_BUSINESS_CONNECTION_STRING") ??
+    builder.Configuration.GetConnectionString("BusinessPostgreSQLConnection");
 
 builder.Services.AddDbContext<UserDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresSQLConnection")));
+    options.UseNpgsql(BusinessConnectionString));
+
+//**********************************************************************************    
 
 var app = builder.Build();
 app.UseCors("AllowAll");
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();

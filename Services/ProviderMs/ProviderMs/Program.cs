@@ -17,6 +17,16 @@ builder.Services.AddPresentation(builder.Configuration)
     .AddInfrastructure(builder.Configuration)
     .AddApplication();
 
+//* Para que funcione el frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 
 
 var _appSettings = new AppSettings();
@@ -27,13 +37,15 @@ builder.Services.Configure<AppSettings>(appSettingsSection);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 
