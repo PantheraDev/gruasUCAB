@@ -8,8 +8,8 @@ using ProviderMs.Domain.Entities;
 
 namespace ProviderMs.ApplicationQueries
 {
-    public class GetAllDepartamentsQuery : IRequest<List<GetDepartament>>
+    public class GetAllDepartmentsQuery : IRequest<List<GetDepartment>>
     {
-        public GetAllDepartamentsQuery() { }
+        public GetAllDepartmentsQuery() { }
     }
 }

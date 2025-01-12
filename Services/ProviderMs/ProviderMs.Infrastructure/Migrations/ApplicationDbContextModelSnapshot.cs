@@ -22,7 +22,7 @@ namespace ProviderMs.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ProviderMs.Domain.Entities.Departament", b =>
+            modelBuilder.Entity("ProviderMs.Domain.Entities.Department", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -48,7 +48,7 @@ namespace ProviderMs.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departament", (string)null);
+                    b.ToTable("Department", (string)null);
                 });
 
             modelBuilder.Entity("ProviderMs.Domain.Entities.Provider", b =>
@@ -96,12 +96,9 @@ namespace ProviderMs.Infrastructure.Migrations
                     b.ToTable("Provider", (string)null);
                 });
 
-            modelBuilder.Entity("ProviderMs.Domain.Entities.ProviderDepartament", b =>
+            modelBuilder.Entity("ProviderMs.Domain.Entities.ProviderDepartment", b =>
                 {
-                    b.Property<Guid>("ProviderId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("DepartamentId")
+                    b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
@@ -110,8 +107,14 @@ namespace ProviderMs.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
+                    b.Property<Guid>("DepartmentId")
+                        .HasColumnType("uuid");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
+
+                    b.Property<Guid>("ProviderId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -119,11 +122,13 @@ namespace ProviderMs.Infrastructure.Migrations
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("text");
 
-                    b.HasKey("ProviderId", "DepartamentId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("DepartamentId");
+                    b.HasIndex("DepartmentId");
 
-                    b.ToTable("ProviderDepartaments", (string)null);
+                    b.HasIndex("ProviderId");
+
+                    b.ToTable("ProviderDepartments", (string)null);
                 });
 
             modelBuilder.Entity("ProviderMs.Domain.Entities.Tow", b =>
@@ -159,8 +164,9 @@ namespace ProviderMs.Infrastructure.Migrations
                     b.Property<Guid>("ProviderId")
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("TowAvailability")
-                        .HasColumnType("boolean");
+                    b.Property<string>("TowAvailability")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<Guid>("TowDriver")
                         .HasColumnType("uuid");
@@ -190,21 +196,21 @@ namespace ProviderMs.Infrastructure.Migrations
                     b.ToTable("Tows", (string)null);
                 });
 
-            modelBuilder.Entity("ProviderMs.Domain.Entities.ProviderDepartament", b =>
+            modelBuilder.Entity("ProviderMs.Domain.Entities.ProviderDepartment", b =>
                 {
-                    b.HasOne("ProviderMs.Domain.Entities.Departament", "Departament")
-                        .WithMany("ProviderDepartaments")
-                        .HasForeignKey("DepartamentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("ProviderMs.Domain.Entities.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ProviderMs.Domain.Entities.Provider", "Provider")
-                        .WithMany("ProviderDepartaments")
+                        .WithMany()
                         .HasForeignKey("ProviderId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Departament");
+                    b.Navigation("Department");
 
                     b.Navigation("Provider");
                 });
@@ -220,15 +226,8 @@ namespace ProviderMs.Infrastructure.Migrations
                     b.Navigation("provider");
                 });
 
-            modelBuilder.Entity("ProviderMs.Domain.Entities.Departament", b =>
-                {
-                    b.Navigation("ProviderDepartaments");
-                });
-
             modelBuilder.Entity("ProviderMs.Domain.Entities.Provider", b =>
                 {
-                    b.Navigation("ProviderDepartaments");
-
                     b.Navigation("Tows");
                 });
 #pragma warning restore 612, 618

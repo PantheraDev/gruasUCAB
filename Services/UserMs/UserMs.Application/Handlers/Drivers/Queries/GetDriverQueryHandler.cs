@@ -27,7 +27,6 @@ namespace UserMs.Application.Handlers.Drives.Queries
                 UserPassword = driver.UserPassword.Value,
                 DriverAvailable = driver.GetDriverAvailableString(),
                 DriverLicenseId = driver.DriverLicenseId.Value,
-                UserProvider = driver.UserProvider.Value,
                 UserDepartament = driver.UserDepartament.Value
             }).ToList();
         }

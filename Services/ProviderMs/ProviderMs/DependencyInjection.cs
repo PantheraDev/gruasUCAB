@@ -18,8 +18,8 @@ namespace ProviderMs
             //* Sin los Scope no funciona!!
             services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
             services.AddScoped<IProviderRepository, ProviderRepository>();
-            services.AddScoped<IDepartamentRepository, DepartamentRepository>();
-            services.AddScoped<IProviderDepartamentRepository, ProviderDepartamentRepository>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<IProviderDepartmentRepository, ProviderDepartmentRepository>();
             services.AddScoped<ITowRepository, TowRepository>();
             return services;
         }

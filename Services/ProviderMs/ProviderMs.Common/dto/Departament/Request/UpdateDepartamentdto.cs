@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ProviderMs.Common.dto.Request
 {
-    public record UpdateDepartamentDto
+    public record UpdateDepartmentDto
     {
         public string? Name { get; init; }
     }

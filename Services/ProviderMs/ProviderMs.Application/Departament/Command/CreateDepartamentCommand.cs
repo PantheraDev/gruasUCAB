@@ -9,13 +9,13 @@ using ProviderMs.Domain.Entities;
 
 namespace ProviderMs.Application.Command
 {
-    public class CreateDepartamentCommand : IRequest<Guid>
+    public class CreateDepartmentCommand : IRequest<Guid>
     {
-        public CreateDepartamentdto Departament { get; set; }
-        
-        public CreateDepartamentCommand(CreateDepartamentdto departament)
+        public CreateDepartmentdto Department { get; set; }
+
+        public CreateDepartmentCommand(CreateDepartmentdto department)
         {
-            Departament = departament;
+            Department = department;
         }
     }
 }

@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace ProviderMs.Common.dto.Response
 {
-    public class GetDepartament
+    public class GetDepartment
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string? Createdby {get; set;}
+        public string? Createdby { get; set; }
 
 
-        public GetDepartament(Guid id, string name,string? createdBy)
+        public GetDepartment(Guid id, string name, string? createdBy)
         {
             Id = id;
             Name = name;
@@ -20,5 +20,5 @@ namespace ProviderMs.Common.dto.Response
         }
     }
 
-    
+
 }

@@ -13,23 +13,23 @@ using ProviderMs.Domain.ValueObjects;
 
 namespace ProviderMs.Application.Handlers.Queries
 {
-    public class GetAllDepartamentQueryHandler : IRequestHandler<GetAllDepartamentsQuery, List<GetDepartament>>
+    public class GetAllDepartmentQueryHandler : IRequestHandler<GetAllDepartmentsQuery, List<GetDepartment>>
     {
-        public IDepartamentRepository _departamentRepository;
+        public IDepartmentRepository _departmentRepository;
 
-        public GetAllDepartamentQueryHandler(IDepartamentRepository departamentRepository)
+        public GetAllDepartmentQueryHandler(IDepartmentRepository departmentRepository)
         {
-            _departamentRepository = departamentRepository;
+            _departmentRepository = departmentRepository;
         }
 
-        public async Task<List<GetDepartament>> Handle(GetAllDepartamentsQuery request, CancellationToken cancellationToken)
+        public async Task<List<GetDepartment>> Handle(GetAllDepartmentsQuery request, CancellationToken cancellationToken)
         {
-            var departament = await _departamentRepository.GetAllAsync();
+            var department = await _departmentRepository.GetAllAsync();
 
-            if (departament == null) throw new ProviderNotFoundException("departament are empty");
+            if (department == null) throw new ProviderNotFoundException("department are empty");
 
-            return departament.Where(p => !p.IsDeleted).Select(p =>
-                new GetDepartament(
+            return department.Where(p => !p.IsDeleted).Select(p =>
+                new GetDepartment(
                     p.Id.Value,
                     p.Name.Value,
                     p.CreatedBy

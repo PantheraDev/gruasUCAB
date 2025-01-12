@@ -36,11 +36,10 @@ namespace UserMs.Application.Handlers.Drives.Commands
                                         .Select(s => s[random.Next(s.Length)]).ToArray());
                                 };
 
-                var userEmailValue = request.Driver.UserEmail?.Value;
+                var userEmailValue = request.Driver.UserEmail;
                 var userPasswordValue = generatePassword();
                 var driverLicenseId = request.Driver.DriverLicenseId;
-                var userProviderValue = request.Driver.UserProvider.Value;
-                var userDepartamentValue = request.Driver.UserDepartament.Value;
+                var userDepartamentValue = request.Driver.UserDepartament;
 
                 await _authMsService.CreateUserAsync(userEmailValue!, userPasswordValue);
                 var userId = await _authMsService.GetUserByUserName(UserEmail.Create(userEmailValue!));
@@ -50,10 +49,9 @@ namespace UserMs.Application.Handlers.Drives.Commands
                     UserId.Create(userId),
                     UserEmail.Create(userEmailValue ?? string.Empty),
                     UserPassword.Create(userPasswordValue ?? string.Empty),
-                    UserProvider.Create(userProviderValue),
                     UserDepartament.Create(userDepartamentValue),
                     Enum.Parse<DriverAvailable>(request.Driver.DriverAvailable!),
-                    driverLicenseId
+                    LicenseId.Create(driverLicenseId)
                 );
 
                 if (request.Driver.DriverAvailable == null)

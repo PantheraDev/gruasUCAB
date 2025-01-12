@@ -9,34 +9,34 @@ using ProviderMs.Domain.ValueObjects;
 namespace ProviderMs.Application.Command
 {
     //TODO: Aqui utilizo un record en lugar de clase
-    public class UpdateDepartamentCommandHandler : IRequestHandler<UpdateDepartamentCommand, Guid>
+    public class UpdateDepartmentCommandHandler : IRequestHandler<UpdateDepartmentCommand, Guid>
     {
-        private readonly IDepartamentRepository _DepartamentRepository;
-        public UpdateDepartamentCommandHandler(IDepartamentRepository DepartamentRepository)
+        private readonly IDepartmentRepository _DepartmentRepository;
+        public UpdateDepartmentCommandHandler(IDepartmentRepository DepartmentRepository)
         {
-            _DepartamentRepository = DepartamentRepository ?? throw new ArgumentNullException(nameof(DepartamentRepository)); //*Valido que estas inyecciones sean exitosas
+            _DepartmentRepository = DepartmentRepository ?? throw new ArgumentNullException(nameof(DepartmentRepository)); //*Valido que estas inyecciones sean exitosas
         }
 
-        public async Task<Guid> Handle(UpdateDepartamentCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(UpdateDepartmentCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var oldDepartament = await _DepartamentRepository.GetByIdAsync(DepartamentId.Create(request.Id)!);
+                var oldDepartment = await _DepartmentRepository.GetByIdAsync(DepartmentId.Create(request.Id)!);
 
-                if (oldDepartament == null) throw new DepartamentNotFoundException("Departament not found");
+                if (oldDepartment == null) throw new DepartmentNotFoundException("Department not found");
 
 
-                if (request.Departament.Name != null)
+                if (request.Department.Name != null)
                 {
-                    oldDepartament = Departament.Update(oldDepartament, DepartamentName.Create(request.Departament.Name));
+                    oldDepartment = Department.Update(oldDepartment, DepartmentName.Create(request.Department.Name));
                 }
-                
+
 
                 //TODO: Hay que hacer que se guarde el UpdatedBy
 
-                await _DepartamentRepository.UpdateAsync(oldDepartament);
+                await _DepartmentRepository.UpdateAsync(oldDepartment);
 
-                return oldDepartament.Id.Value;
+                return oldDepartment.Id.Value;
             }
             catch (Exception ex)
             {

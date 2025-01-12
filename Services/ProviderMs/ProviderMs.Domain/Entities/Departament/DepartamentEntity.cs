@@ -6,28 +6,31 @@ using ProviderMs.Domain.ValueObjects;
 
 namespace ProviderMs.Domain.Entities;
 
-public  sealed class Departament : AggregateRoot
+public sealed class Department : AggregateRoot
 {
-    public DepartamentId Id {get; private set;}
-    public DepartamentName Name{get; private set;}
+    public DepartmentId Id { get; private set; }
+    public DepartmentName Name { get; private set; }
 
-    public List<ProviderDepartament> ProviderDepartaments {get; private set;}
+    //public List<ProviderDepartment> ProviderDepartments {get; private set;}
+    //public ProviderId ProviderId { get; private set; }
+    public List<Provider> Providers { get; private set; }
 
-    public Departament (DepartamentId id, DepartamentName name)
+    public Department(DepartmentId id, DepartmentName name)
     {
         Id = id;
         Name = name;
-        ProviderDepartaments = new List<ProviderDepartament>();
+        //ProviderDepartments = new List<ProviderDepartment>();
     }
 
-    public Departament() { }
+    public Department() { }
 
-    public static Departament Update(Departament departament, DepartamentName? name){
+    public static Department Update(Department department, DepartmentName? name)
+    {
 
-            var updates = new List<Action>{
-                () => {if(name !=null) departament.Name = name;},
+        var updates = new List<Action>{
+                () => {if(name !=null) department.Name = name;},
             };
-            updates.ForEach(update => update());
-            return departament;
+        updates.ForEach(update => update());
+        return department;
     }
 }

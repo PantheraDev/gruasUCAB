@@ -7,13 +7,13 @@ using ProviderMs.Domain.Entities;
 
 namespace ProviderMs.Core.Repository
 {
-    public interface IDepartamentRepository
+    public interface IDepartmentRepository
     {
-        Task<Departament?> GetByIdAsync(DepartamentId id);
-        Task AddAsync(Departament departament); 
-        Task DeleteAsync(DepartamentId id);
-        Task<List<Departament>?> GetAllAsync();
-        Task<Departament?> UpdateAsync(Departament departament);
-        Task<bool> ExistsAsync(DepartamentId id);
+        Task<Department?> GetByIdAsync(DepartmentId id);
+        Task AddAsync(Department department);
+        Task DeleteAsync(DepartmentId id);
+        Task<List<Department>?> GetAllAsync();
+        Task<Department?> UpdateAsync(Department department);
+        Task<bool> ExistsAsync(DepartmentId id);
     }
 }

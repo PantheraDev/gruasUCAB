@@ -7,6 +7,5 @@ namespace ProviderMs.Common.dto.Request
         public string? Email { get; init; }
         public string? RIF { get; init; }
         public string? Address { get; init; }
-        public List<Guid>? DepartamentId { get; init; }
     }
 }

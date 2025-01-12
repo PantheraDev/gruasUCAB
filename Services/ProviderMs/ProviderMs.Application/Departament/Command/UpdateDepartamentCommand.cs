@@ -7,14 +7,14 @@ using ProviderMs.Common.dto.Request;
 
 namespace ProviderMs.Application.Command
 {
-    public class UpdateDepartamentCommand : IRequest<Guid>
+    public class UpdateDepartmentCommand : IRequest<Guid>
     {
         public Guid Id { get; set; }
-        public UpdateDepartamentDto Departament { get; set; }
+        public UpdateDepartmentDto Department { get; set; }
 
-        public UpdateDepartamentCommand(Guid id, UpdateDepartamentDto departament)
+        public UpdateDepartmentCommand(Guid id, UpdateDepartmentDto department)
         {
-            Departament = departament;
+            Department = department;
             Id = id;
         }
     }

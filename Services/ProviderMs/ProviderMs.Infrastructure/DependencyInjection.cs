@@ -24,19 +24,15 @@ namespace ProviderMs.Infrastructure
         private static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
             var BusinessConnectionString = Environment.GetEnvironmentVariable("DB_BUSINESS_CONNECTION_STRING") ??
-                                        configuration.GetConnectionString("BusinessPostgreSQLConnection");
+            configuration.GetConnectionString("BusinessPostgreSQLConnection");
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(BusinessConnectionString));
-            // services.AddDbContext<ApplicationDbContext>(options =>
-            // {
-            //     options.UseNpgsql(configuration.GetConnectionString("PostgresSQLConnection"));
-            // });
             services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>()!);
             services.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<ApplicationDbContext>()!);
 
             services.AddScoped<IProviderRepository, ProviderRepository>();
-            services.AddScoped<IDepartamentRepository, DepartamentRepository>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             services.AddScoped<TowRepository, TowRepository>();
 
             return services;

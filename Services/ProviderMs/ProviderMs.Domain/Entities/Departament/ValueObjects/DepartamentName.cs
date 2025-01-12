@@ -7,19 +7,19 @@ using ProviderMs.Common.Exceptions;
 
 namespace ProviderMs.Domain.ValueObjects
 {
-    public partial class DepartamentName
+    public partial class DepartmentName
     {
         private const string Pattern = @"^[a-zA-Z]+$";
-        private DepartamentName(string value) => Value = value;
+        private DepartmentName(string value) => Value = value;
 
-        public static DepartamentName Create(string value)
+        public static DepartmentName Create(string value)
         {
             try
             {
-                if (string.IsNullOrEmpty(value)) throw new NullAttributeException("Departament Name is required");
-                if (!NameRegex().IsMatch(value)) throw new InvalidAttributeException("Departament Name is invalid");
+                if (string.IsNullOrEmpty(value)) throw new NullAttributeException("Department Name is required");
+                if (!NameRegex().IsMatch(value)) throw new InvalidAttributeException("Department Name is invalid");
 
-                return new DepartamentName(value);
+                return new DepartmentName(value);
             }
             catch (Exception e)
             {

@@ -7,50 +7,50 @@ using ProviderMs.Domain.ValueObjects;
 
 namespace ProviderMs.Infrastructure.Repositories
 {
-    public class DepartamentRepository : IDepartamentRepository
+    public class DepartmentRepository : IDepartmentRepository
     {
         private readonly IApplicationDbContext _dbContext;
 
-        public DepartamentRepository(IApplicationDbContext dbContext)
+        public DepartmentRepository(IApplicationDbContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
-        public async Task AddAsync(Departament departament)
+        public async Task AddAsync(Department department)
         {
-            await _dbContext.Departaments.AddAsync(departament);
+            await _dbContext.Departments.AddAsync(department);
             await _dbContext.SaveEfContextChanges("");
         }
 
-        public async Task<Departament?> GetByIdAsync(DepartamentId id)
+        public async Task<Department?> GetByIdAsync(DepartmentId id)
         {
-            var departament = await _dbContext.Departaments.FirstOrDefaultAsync(x => x.Id == id);
+            var department = await _dbContext.Departments.FirstOrDefaultAsync(x => x.Id == id);
             //TODO: Borrar todos los console
-            return departament;
+            return department;
         }
-        public async Task<List<Departament>?> GetAllAsync()
+        public async Task<List<Department>?> GetAllAsync()
         {
-            var departaments = await _dbContext.Departaments.ToListAsync();
-            return departaments;
+            var departments = await _dbContext.Departments.ToListAsync();
+            return departments;
         }
 
-        public async Task DeleteAsync(DepartamentId id)
+        public async Task DeleteAsync(DepartmentId id)
         {
-            var departament = await _dbContext.Departaments.FirstOrDefaultAsync(x => x.Id == id);
-            if (departament == null) throw new DepartamentNotFoundException("departament not found");
+            var department = await _dbContext.Departments.FirstOrDefaultAsync(x => x.Id == id);
+            if (department == null) throw new DepartmentNotFoundException("department not found");
 
-            departament.IsDeleted = true;
+            department.IsDeleted = true;
             await _dbContext.SaveEfContextChanges("");
         }
 
-        public async Task<Departament?> UpdateAsync(Departament departament)
+        public async Task<Department?> UpdateAsync(Department department)
         {
-            _dbContext.Departaments.Update(departament);
+            _dbContext.Departments.Update(department);
             await _dbContext.SaveEfContextChanges("");
-            return departament;
+            return department;
         }
-         public Task<bool> ExistsAsync(DepartamentId id)
+        public Task<bool> ExistsAsync(DepartmentId id)
         {
-            return _dbContext.Departaments.AnyAsync(x => x.Id == id);
+            return _dbContext.Departments.AnyAsync(x => x.Id == id);
         }
     }
 }

@@ -3,11 +3,11 @@ using ProviderMs.Common.dto.Response;
 
 namespace ProviderMs.Application.Queries
 {
-    public class GetProviderDepartamentQuery : IRequest<List<GetProviderDepartamentByProviderId>>
+    public class GetProviderDepartmentQuery : IRequest<GetProviderDepartment>
     {
         public Guid Id { get; set; }
 
-        public GetProviderDepartamentQuery(Guid id)
+        public GetProviderDepartmentQuery(Guid id)
         {
             Id = id;
         }

@@ -22,6 +22,11 @@ namespace ProviderMs.Domain.ValueObjects
             return new ProviderId(value);
         }
 
+        public static ProviderId Create(object value)
+        {
+            throw new NotImplementedException();
+        }
+
         public Guid Value { get; init; }
     }
 }

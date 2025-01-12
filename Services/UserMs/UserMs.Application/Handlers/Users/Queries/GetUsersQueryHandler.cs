@@ -26,7 +26,6 @@ namespace UserMs.Application.Handlers.User.Queries
                 UserEmail = users.UserEmail.Value,
                 UserPassword = users.UserPassword.Value,
                 UsersType = users.GetUsersTypeString(),
-                UserProvider = users.UserProvider.Value,
                 UserDepartament = users.UserDepartament.Value
             }).ToList();
         }

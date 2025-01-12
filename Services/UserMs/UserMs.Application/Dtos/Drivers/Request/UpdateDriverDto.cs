@@ -1,13 +1,13 @@
 using UserMs.Domain.Entities;
 
-namespace UserMs.Application.Dtos.Drivers.Request{
+namespace UserMs.Application.Dtos.Drivers.Request
+{
     public class UpdateDriverDto
     {
-        public UserEmail? UserEmail { get; set; }
-        public UserPassword? UserPassword { get; set; }
+        public string? UserEmail { get; set; }
+        public string? UserPassword { get; set; }
         public DriverAvailable DriverAvailable { get; set; }
-        public LicenseId? DriverLicenseId { get; set; }
-        public UserProvider? UserProvider { get; set; }
-        public UserDepartament? UserDepartament { get; set; }
+        public Guid? DriverLicenseId { get; set; }
+        public Guid? UserDepartament { get; set; }
     }
 }

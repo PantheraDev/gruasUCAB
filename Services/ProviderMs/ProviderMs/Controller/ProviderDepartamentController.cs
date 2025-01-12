@@ -1,122 +1,227 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ProviderMs.Application.Command;
 using ProviderMs.Application.Queries;
+using ProviderMs.Common.dto.Request;
 using ProviderMs.Common.Exceptions;
 using ProviderMs.ApplicationQueries;
-using ProviderMs.Application.Command;
 using Microsoft.AspNetCore.Authorization;
+using ProviderMs.Infrastructure.Exceptions;
 
 namespace ProviderMs.Controllers
 {
     [ApiController]
-    [Route("provider/providerDepartament")]
+    [Route("provider")]
 
-    public class ProviderDepartamentController : ControllerBase
+    public class ProviderDepartmentController : ControllerBase
     {
-        private readonly ILogger<ProviderDepartamentController> _logger;
+        private readonly ILogger<ProviderDepartmentController> _logger;
         private readonly IMediator _mediator;
 
-        public ProviderDepartamentController(ILogger<ProviderDepartamentController> logger, IMediator mediator)
+        public ProviderDepartmentController(ILogger<ProviderDepartmentController> logger, IMediator mediator)
         {
             _logger = logger;
             _mediator = mediator;
         }
 
         [Authorize(Policy = "AdminProviderOnly")]
-        [HttpGet]
-        public async Task<IActionResult> GetAllProviderDepartaments()
+        [HttpPost]
+        [Route("addDepartment")]
+        public async Task<IActionResult> CreateProviderDepartment([FromBody] CreateProviderDepartmentdto createProviderDepartmentDto)
         {
             try
             {
-                var query = new GetAllProviderDepartamentsQuery();
-                var providerDepartaments = await _mediator.Send(query);
-                return Ok(providerDepartaments);
+                var command = new CreateProviderDepartmentCommand(createProviderDepartmentDto);
+                var providerDepartmentId = await _mediator.Send(command);
+                return Ok(providerDepartmentId);
             }
             catch (ProviderNotFoundException e)
             {
-                _logger.LogError("An error occurred while trying to create an provider: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an providerDepartment: {Message}", e.Message);
                 return StatusCode(404, e.Message);
             }
             catch (NullAttributeException e)
             {
-                _logger.LogError("An error occurred while trying to create an provider: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an providerDepartment: {Message}", e.Message);
                 return StatusCode(400, e.Message);
             }
             catch (InvalidAttributeException e)
             {
-                _logger.LogError("An error occurred while trying to create an provider: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an providerDepartment: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (ValidatorException e)
+            {
+                _logger.LogError("An error occurred while trying to create an providerDepartment: {Message}", e.Message);
                 return StatusCode(400, e.Message);
             }
             catch (Exception e)
             {
-                _logger.LogError("An error occurred while trying to search provider: {Message}", e.Message);
-                return StatusCode(500, "An error occurred while trying to search providers");
+                _logger.LogError("An error occurred while trying to create an providerDepartamen: {Message}", e.Message);
+                return StatusCode(500, "An error occurred while trying to create an providerDepartment");
             }
         }
 
         [Authorize(Policy = "AdminProviderOnly")]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetProviderDepartament([FromRoute] Guid id)
+        [HttpGet("getOneDepartment/{id}")]
+        public async Task<IActionResult> GetProviderDepartment([FromRoute] Guid id)
         {
             try
             {
-                var command = new GetProviderDepartamentQuery(id);
-                var providerDepartament = await _mediator.Send(command);
-                return Ok(providerDepartament);
+                var command = new GetProviderDepartmentQuery(id);
+                var providerDepartment = await _mediator.Send(command);
+                return Ok(providerDepartment);
             }
             catch (ProviderNotFoundException e)
             {
-                _logger.LogError("An error occurred while trying to create an provider: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an providerDepartment: {Message}", e.Message);
                 return StatusCode(404, e.Message);
             }
             catch (NullAttributeException e)
             {
-                _logger.LogError("An error occurred while trying to create an provider: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an providerDepartment: {Message}", e.Message);
                 return StatusCode(400, e.Message);
             }
             catch (InvalidAttributeException e)
             {
-                _logger.LogError("An error occurred while trying to create an provider: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an providerDepartment: {Message}", e.Message);
                 return StatusCode(400, e.Message);
             }
             catch (Exception e)
             {
-                _logger.LogError("An error occurred while trying to search an provider: {Message}", e.Message);
-                return StatusCode(500, "An error occurred while trying to search an provider");
+                _logger.LogError("An error occurred while trying to search an providerDepartment: {Message}", e.Message);
+                return StatusCode(500, "An error occurred while trying to search an providerDepartment");
+            }
+        }
+
+         [Authorize(Policy = "AdminProviderOnly")]
+        [HttpGet("getAllDepartments")]
+        public async Task<IActionResult> GetAllProviderDepartments()
+        {
+            try
+            {
+                var command = new GetAllProviderDepartmentsQuery();
+                var providerDepartment = await _mediator.Send(command);
+                return Ok(providerDepartment);
+            }
+            catch (ProviderNotFoundException e)
+            {
+                _logger.LogError("An error occurred while trying to create an providerDepartment: {Message}", e.Message);
+                return StatusCode(404, e.Message);
+            }
+            catch (NullAttributeException e)
+            {
+                _logger.LogError("An error occurred while trying to create an providerDepartment: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (InvalidAttributeException e)
+            {
+                _logger.LogError("An error occurred while trying to create an providerDepartment: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("An error occurred while trying to search an providerDepartment: {Message}", e.Message);
+                return StatusCode(500, "An error occurred while trying to search an providerDepartment");
+            }
+        }
+
+        [Authorize(Policy = "AdminProviderOnly")]
+        [HttpGet("getDepartmentsByProvider/{providerId}")]
+        public async Task<IActionResult> GetDepartmentsByProvider([FromRoute] Guid providerId)
+        {
+            try
+            {
+                var command = new GetDepartmentsByProviderQuery(providerId);
+                var providerDepartment = await _mediator.Send(command);
+                return Ok(providerDepartment);
+            }
+            catch (ProviderNotFoundException e)
+            {
+                _logger.LogError("An error occurred while trying to create an providerDepartment: {Message}", e.Message);
+                return StatusCode(404, e.Message);
+            }
+            catch (NullAttributeException e)
+            {
+                _logger.LogError("An error occurred while trying to create an providerDepartment: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (InvalidAttributeException e)
+            {
+                _logger.LogError("An error occurred while trying to create an providerDepartment: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("An error occurred while trying to search an providerDepartment: {Message}", e.Message);
+                return StatusCode(500, "An error occurred while trying to search an providerDepartment");
+            }
+        }
+
+        [Authorize(Policy = "AdminOnly")]
+        [HttpPut]
+        [Route("updateDepartment/{id}")]
+        public async Task<IActionResult> UpdateProviderDepartment([FromRoute] Guid id, [FromBody] UpdateProviderDepartmentDto updateProviderDepartmentDto)
+        {
+            try
+            {
+                var command = new UpdateProviderDepartmentCommand(id, updateProviderDepartmentDto);
+                var providerDepartmentId = await _mediator.Send(command);
+                return Ok(providerDepartmentId);
+            }
+            catch (ProviderNotFoundException e)
+            {
+                _logger.LogError("An error occurred while trying to create an providerDepartment: {Message}", e.Message);
+                return StatusCode(404, e.Message);
+            }
+            catch (NullAttributeException e)
+            {
+                _logger.LogError("An error occurred while trying to create an providerDepartment: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (InvalidAttributeException e)
+            {
+                _logger.LogError("An error occurred while trying to create an providerDepartment: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("An error occurred while trying to update an providerDepartment: {Message}", e.Message);
+                return StatusCode(500, "An error occurred while trying to update an providerDepartment");
             }
         }
 
         [Authorize(Policy = "AdminOnly")]
         [HttpDelete]
-        [Route("{providerId}/departaments/{departamentId}")]
-        public async Task<IActionResult> DeleteProviderDepartament([FromRoute] Guid providerId, [FromRoute] Guid departamentId)
+        [Route("deleteDepartment/{id}")]
+        public async Task<IActionResult> DeleteProviderDepartment([FromRoute] Guid id)
         {
             try
             {
-                var command = new DeleteProviderDepartamentCommand(providerId, departamentId);
-                var providerDepartamentId = await _mediator.Send(command);
-                return Ok(providerDepartamentId);
+                var command = new DeleteProviderDepartmentCommand(id);
+                var providerDepartmentId = await _mediator.Send(command);
+                return Ok(providerDepartmentId);
             }
             catch (ProviderNotFoundException e)
             {
-                _logger.LogError("An error occurred while trying to create an provider: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an providerDepartment: {Message}", e.Message);
                 return StatusCode(404, e.Message);
             }
             catch (NullAttributeException e)
             {
-                _logger.LogError("An error occurred while trying to create an provider: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an providerDepartment: {Message}", e.Message);
                 return StatusCode(400, e.Message);
             }
             catch (InvalidAttributeException e)
             {
-                _logger.LogError("An error occurred while trying to create an provider: {Message}", e.Message);
+                _logger.LogError("An error occurred while trying to create an providerDepartment: {Message}", e.Message);
                 return StatusCode(400, e.Message);
             }
             catch (Exception e)
             {
                 //TODO: Colocar validaciones HTTP
-                _logger.LogError("An error occurred while trying to delete an provider: {Message}", e.Message);
-                return StatusCode(500, "An error occurred while trying to delete an provider");
+                _logger.LogError("An error occurred while trying to delete an providerDepartment: {Message}", e.Message);
+                return StatusCode(500, "An error occurred while trying to delete an providerDepartment");
             }
         }
     }

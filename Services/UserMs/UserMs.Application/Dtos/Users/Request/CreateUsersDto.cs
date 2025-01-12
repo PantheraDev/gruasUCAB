@@ -1,12 +1,11 @@
 using UserMs.Domain.Entities;
 
-namespace UserMs.Application.Dtos.Users.Request{
+namespace UserMs.Application.Dtos.Users.Request
+{
     public class CreateUsersDto
     {
-        public UserEmail? UserEmail { get; set; }
-        public UserPassword? UserPassword { get; set; }
+        public string UserEmail { get; set; } = String.Empty;
         public string? UsersType { get; init; }
-        public UserProvider? UserProvider { get; set; }
-        public UserDepartament? UserDepartament { get; set; }
+        public Guid ProviderDepartmentId { get; set; }
     }
 }

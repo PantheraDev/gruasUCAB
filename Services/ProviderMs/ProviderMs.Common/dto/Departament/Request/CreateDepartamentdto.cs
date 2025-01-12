@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace ProviderMs.Common.dto.Request
 {
-    public record CreateDepartamentdto
-    {   
+    public record CreateDepartmentdto
+    {
         public string? Name { get; init; }
     }
 }
