@@ -40,11 +40,11 @@ namespace ProviderMs.Infrastructure.Database.Configuration
                     .HasConversion(towtype => towtype.ToString(), value =>  (TowType)Enum.Parse(typeof(TowType),value)!)
                     .IsRequired();
                 builder.Property(v => v.ProviderId) // Configuración de la clave foránea
-                    .HasConversion(providerId => providerId.Value, value => ProviderId.Create(value))
+                    .HasConversion(providerId => providerId.Value, value => ProviderId.Create(value)!)
                     .IsRequired();
                 builder.Property(s => s.TowDriver)
-                    .HasConversion(towdriver=> towdriver.Value, value => TowDriver.Create(value)!)
-                    .IsRequired();
+                    .HasConversion(towdriver=> towdriver!.Value, value => TowDriver.Create(value)!)
+                    .IsRequired(false);
 
                 builder.HasOne(v => v.provider) // Configuración de la relación
                     .WithMany(p => p.Tows)

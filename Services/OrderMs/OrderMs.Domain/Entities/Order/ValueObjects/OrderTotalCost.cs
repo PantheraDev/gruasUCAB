@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using OrderMs.Common.Exceptions;
 
 namespace OrderMs.Domain.Entities.ValueObjects
@@ -16,7 +12,7 @@ namespace OrderMs.Domain.Entities.ValueObjects
         {
             try
             {
-                if (value == default) throw new NullAttributeException("Total cost is required");
+                //if (value == default) throw new NullAttributeException("Total cost is required");
                 //if (!TotalCostRegex().IsMatch(value)) throw new InvalidAttributeException("Client ci is invalid");
                 if (value < 0) throw new InvalidAttributeException("Total cost is invalid");
 

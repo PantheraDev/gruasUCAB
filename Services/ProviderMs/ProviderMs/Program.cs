@@ -4,8 +4,10 @@ using ProviderMs;
 using ProviderMs.Application;
 using ProviderMs.Application.Command;
 using ProviderMs.Core.Database;
+using ProviderMs.Core.Services;
 using ProviderMs.Infrastructure;
 using ProviderMs.Infrastructure.Database;
+using ProviderMs.Infrastructure.Services;
 using ProviderMs.Infrastructure.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +35,9 @@ var _appSettings = new AppSettings();
 var appSettingsSection = builder.Configuration.GetSection("AppSettings");
 _appSettings = appSettingsSection.Get<AppSettings>();
 builder.Services.Configure<AppSettings>(appSettingsSection);
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient<IUserService, UserService>();
 
 var app = builder.Build();
 

@@ -33,9 +33,10 @@ namespace OrderMs.Application.Commands
                 var additionalCostId = AdditionalCostId.Create();
                 var additionalCostDescription = AdditionalCostDescription.Create(request.AdditionalCost.Description);
                 var additionalCostValue = AdditionalCostValue.Create(request.AdditionalCost.Value);
-
+                var orderId = OrderId.Create(request.AdditionalCost.OrderId);
+                
                 //* Se crea el AdditionalCoste
-                var additionalCost = new AdditionalCost(additionalCostId, additionalCostDescription, additionalCostValue);
+                var additionalCost = new AdditionalCost(additionalCostId, additionalCostDescription, additionalCostValue, orderId!);
 
                 //* Se agrega el AdditionalCoste a la BD
                 await _additionalCostRepository.AddAsync(additionalCost);
@@ -43,7 +44,7 @@ namespace OrderMs.Application.Commands
                 //* Retorna la id del AdditionalCoste
                 return additionalCost.Id.Value;
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }

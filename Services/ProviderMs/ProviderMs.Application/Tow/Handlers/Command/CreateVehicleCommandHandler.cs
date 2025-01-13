@@ -31,7 +31,7 @@ namespace ProviderMs.Application.Command
                 await validator.ValidateRequest(request.Vehicle);
 
                 //* Se crean los Value Objects
-                var towId= VehicleId.Create();
+                var towId = VehicleId.Create();
                 var towcolor = VehicleColor.Create(request.Vehicle.Color);
                 var towyear = VehicleYear.Create(request.Vehicle.Year);
                 var towmodel = VehicleModel.Create(request.Vehicle.Model);
@@ -40,10 +40,10 @@ namespace ProviderMs.Application.Command
                 var towlocation = TowLocation.Create(request.Vehicle.TowLocation);
                 var towavailability = (TowAvailability)Enum.Parse(typeof(TowAvailability), request.Vehicle.TowAvailability);
                 var towtype = (TowType)Enum.Parse(typeof(TowType), request.Vehicle.TowType);
-                var towdriver = TowDriver.Create(request.Vehicle.TowDriver);
+                //var towdriver = TowDriver.Create(request.Vehicle.TowDriver);
                 //* Se crea el cliente
                 var providerId = ProviderId.Create(request.Vehicle.ProviderId);
-                var vehicle = new Tow(towId, towcolor, towyear, towmodel, towbrand, towlicenseplate, towlocation, towavailability, towtype, providerId, towdriver);
+                var vehicle = new Tow(towId, towcolor, towyear, towmodel, towbrand, towlicenseplate, towlocation, towavailability, towtype, providerId!, null);
 
                 //* Se agrega el cliente a la BD
                 await _vehicleRepository.AddAsync(vehicle);

@@ -1,8 +1,10 @@
 
 using OrderMs.Core.Database;
 using OrderMs.Core.Repositories;
+using OrderMs.Core.Services;
 using OrderMs.Infrastructure.Database;
 using OrderMs.Infrastructure.Repositories;
+using OrderMs.Infrastructure.Services;
 using OrderMS;
 
 
@@ -26,6 +28,8 @@ namespace OrderMs
             services.AddScoped<IInsuredVehicleRepository, InsuredVehicleRepository>();
             services.AddScoped<IPolicyRepository, PolicyRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IProviderService, ProviderService>();
+            services.AddScoped<IGoogleApiService, GoogleApiService>();
 
             return services;
         }

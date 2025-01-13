@@ -34,7 +34,9 @@ namespace OrderMs.Application.Handlers.Queries
                     c.Id.Value,
                     c.CreatedBy,
                     c.Value.Value,
-                    c.Description.Value
+                    c.Description.Value,
+                    c.OrderId.Value,
+                    (c.Verified == 0) ? "Verificado" : "NoVerificado"
                 )
             ).ToList();
         }

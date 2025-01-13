@@ -30,7 +30,6 @@ namespace ProviderMs.Infrastructure.Repositories
         public async Task<Tow?> GetByIdAsync(VehicleId id)
         {
             var tow = await _dbContext.Tows.FirstOrDefaultAsync(x => x.Id == id);
-            //TODO: Borrar todos los console
             return tow;
         }
         public async Task<List<Tow>?> GetAllAsync()
@@ -59,5 +58,7 @@ namespace ProviderMs.Infrastructure.Repositories
         {
             return _dbContext.Tows.AnyAsync(x => x.Id == id);
         }
+
+        
     }
 }

@@ -18,6 +18,16 @@ builder.Services.AddScoped<IKeycloakRepository, KeycloakRepository>();
 
 builder.Services.AddControllers();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
 
 var app = builder.Build();
 
@@ -33,7 +43,7 @@ app.MapGet("users/me", (ClaimsPrincipal user) =>
     return user.Claims.ToDictionary(c => c.Type, c => c.Value);
 }).RequireAuthorization();
 
-
+app.UseCors("AllowAll");
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

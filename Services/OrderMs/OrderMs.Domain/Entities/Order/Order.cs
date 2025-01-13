@@ -11,18 +11,18 @@ namespace OrderMs.Domain.Entities
     {
         public OrderId Id { get; private set; }
         public OrderDestinyLocation DestinyLocation { get; private set; }
+        public OrderOriginLocation? OriginLocation { get; set; }
         public OrderTotalCost TotalCost { get; private set; }
         public OrderDate Date { get; private set; }
         public OrderState State { get; private set; }
         public IncidentId IncidentId { get; private set; }
         public PolicyId PolicyId { get; private set; }
-        public AdditionalCostId? AdditionalCostId { get; private set; }
-        public TowId? TowId { get; private set; }
+        public TowId? TowId { get; set; }
         public Incident? Incident { get; private set; }
         public Policy? Policy { get; private set; }
-        public AdditionalCost? AdditionalCost { get; private set; }
+        public ICollection<AdditionalCost> AdditionalCosts { get; private set; } = new List<AdditionalCost>();
 
-        public Order(OrderId id, OrderDestinyLocation destinyLocation, OrderTotalCost totalCost, OrderDate date, OrderState state, IncidentId incidentId, PolicyId policyId, AdditionalCostId? additionalCostId = null, TowId? towId = null)
+        public Order(OrderId id, OrderDestinyLocation destinyLocation, OrderTotalCost totalCost, OrderDate date, OrderState state, IncidentId incidentId, PolicyId policyId, TowId? towId = null)
         {
             Id = id;
             DestinyLocation = destinyLocation;
@@ -31,13 +31,18 @@ namespace OrderMs.Domain.Entities
             State = state;
             IncidentId = incidentId;
             PolicyId = policyId;
-            AdditionalCostId = additionalCostId;
+            // AdditionalCostId = additionalCostId;
             TowId = towId;
         }
 
         public Order() { }
 
-        public static Order Update(Order Order, OrderDestinyLocation? destinyLocation, OrderTotalCost? totalCost, OrderDate? date, OrderState? state, IncidentId? incidentId, PolicyId? policyId, AdditionalCostId? additionalCostId = null, TowId? towId = null)
+        public void AddAdditionalCost(AdditionalCost additionalCost)
+        {
+            AdditionalCosts.Add(additionalCost);
+        }
+
+        public static Order Update(Order Order, OrderDestinyLocation? destinyLocation, OrderTotalCost? totalCost, OrderDate? date, OrderState? state, IncidentId? incidentId, PolicyId? policyId, AdditionalCostId? additionalCostId = null, TowId? towId = null, OrderOriginLocation? originLocation = null)
         {
             // TODO: Esto podria solucionarse haciendo un DTO
             var updates = new List<Action>{
@@ -47,8 +52,8 @@ namespace OrderMs.Domain.Entities
                     () => { if (state != null) Order.State = state.Value; },
                     () => { if (incidentId != null) Order.IncidentId = incidentId; },
                     () => { if (policyId != null) Order.PolicyId = policyId; },
-                    () => { if (additionalCostId != null) Order.AdditionalCostId = additionalCostId; },
-                    () => { if (towId != null) Order.TowId = towId; }
+                    () => { if (towId != null) Order.TowId = towId; },
+                    () => { if (originLocation != null) Order.OriginLocation = originLocation; }
                 };
 
             updates.ForEach(update => update());

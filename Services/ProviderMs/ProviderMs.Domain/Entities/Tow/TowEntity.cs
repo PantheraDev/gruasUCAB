@@ -14,13 +14,13 @@ public  sealed class Tow : AggregateRoot, IVehicle
     public VehicleBrand Brand {get; private set;}
     public VehicleLicensePlate LicensePlate {get; private set;}
     public TowLocation TowLocation {get; private set;}
-    public TowAvailability TowAvailability {get; private set;}
+    public TowAvailability TowAvailability {get; set;}
     public TowType TowType {get; private set;}
     public ProviderId ProviderId {get; private set;}
     public Provider provider {get; set;} 
-    public TowDriver TowDriver {get; private set;}
+    public TowDriver? TowDriver {get; set;}
 
-    public Tow (VehicleId id, VehicleColor color, VehicleYear year, VehicleModel model, VehicleBrand brand, VehicleLicensePlate licensePlate, TowLocation towLocation, TowAvailability towAvailibility, TowType towType, ProviderId providerId, TowDriver towDriver)
+    public Tow (VehicleId id, VehicleColor color, VehicleYear year, VehicleModel model, VehicleBrand brand, VehicleLicensePlate licensePlate, TowLocation towLocation, TowAvailability towAvailibility, TowType towType, ProviderId providerId, TowDriver? towDriver = null)
     {
         Id = id;
         Color = color;

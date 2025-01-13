@@ -62,7 +62,7 @@ namespace OrderMs.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminDriverOperatorOnly")]
+        //[Authorize(Policy = "AdminDriverOperatorOnly")]
         [HttpGet]
         public async Task<IActionResult> GetAllOrders()
         {
@@ -94,7 +94,7 @@ namespace OrderMs.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminDriverOperatorOnly")]
+        //[Authorize(Policy = "AdminDriverOperatorOnly")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOrder([FromRoute] Guid id)
         {
@@ -193,5 +193,78 @@ namespace OrderMs.Controllers
             }
         }
 
+        //[Authorize(Policy = "AdminOperatorOnly")]
+        [HttpPost("finish/{id}")]
+        public async Task<IActionResult> FinishOrder([FromRoute] Guid id)
+        {
+            try
+            {
+                var command = new FinishOrderCommand(id);
+                var OrderId = await _mediator.Send(command);
+                return Ok(OrderId);
+            }
+            catch (OrderNotFoundException e)
+            {
+                _logger.LogError("An error occurred while trying to create an Order: {Message}", e.Message);
+                return StatusCode(404, e.Message);
+            }
+            catch (NullAttributeException e)
+            {
+                _logger.LogError("An error occurred while trying to create an Order: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (InvalidAttributeException e)
+            {
+                _logger.LogError("An error occurred while trying to create an Order: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (ValidatorException e)
+            {
+                _logger.LogError("An error occurred while trying to create an Order: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("An error occurred while trying to create an Order: {Message}", e.Message);
+                return StatusCode(500, "An error occurred while trying to create an Order");
+            }
+        }
+
+        //[Authorize(Policy = "AdminOperatorOnly")]
+        [HttpPost("cancelOrder/{id}")]
+        public async Task<IActionResult> CancelOrder([FromRoute] Guid id)
+        {
+            try
+            {
+                var command = new CancelOrderCommand(id);
+                var OrderId = await _mediator.Send(command);
+                return Ok(OrderId);
+            }
+            catch (OrderNotFoundException e)
+            {
+                _logger.LogError("An error occurred while trying to create an Order: {Message}", e.Message);
+                return StatusCode(404, e.Message);
+            }
+            catch (NullAttributeException e)
+            {
+                _logger.LogError("An error occurred while trying to create an Order: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (InvalidAttributeException e)
+            {
+                _logger.LogError("An error occurred while trying to create an Order: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (ValidatorException e)
+            {
+                _logger.LogError("An error occurred while trying to create an Order: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("An error occurred while trying to create an Order: {Message}", e.Message);
+                return StatusCode(500, "An error occurred while trying to create an Order");
+            }
+        }
     }
 }

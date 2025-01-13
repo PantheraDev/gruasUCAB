@@ -61,7 +61,7 @@ namespace OrderMs.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOperatorOnly")]
+        //[Authorize(Policy = "AdminOperatorOnly")]
         [HttpGet]
         public async Task<IActionResult> GetAllInsuredVehicles()
         {
@@ -93,7 +93,7 @@ namespace OrderMs.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOperatorOnly")]
+        //[Authorize(Policy = "AdminOperatorOnly")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetInsuredVehicle([FromRoute] Guid id)
         {
