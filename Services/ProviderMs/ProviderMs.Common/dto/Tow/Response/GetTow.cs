@@ -14,14 +14,14 @@ namespace ProviderMs.Common.dto.Response
         public string Model { get; set; }
         public string Brand { get; set; }
         public string LicensePlate { get; set; }
-        public string TowLocation {get; set;}
-        public TowAvailability TowAvailability {get; init;}
-        public TowType TowType {get; set;}
-        public Guid ProviderId {get; init;}
-        public Guid TowDriver {get; set;}
+        public string TowLocation { get; set; }
+        public TowAvailability TowAvailability { get; init; }
+        public TowType TowType { get; set; }
+        public Guid ProviderId { get; init; }
+        public Guid? TowDriver { get; set; }
         public string? CreatedBy { get; set; }
 
-        public GetTow(Guid id, string color, string year, string model, string brand, string licensePlate, string towLocation, TowAvailability towAvailability, TowType towType, Guid providerId, Guid towDriver, string? createdBy)
+        public GetTow(Guid id, string color, string year, string model, string brand, string licensePlate, string towLocation, TowAvailability towAvailability, TowType towType, Guid providerId, Guid? towDriver, string? createdBy)
         {
             Id = id;
             Color = color;
@@ -38,4 +38,3 @@ namespace ProviderMs.Common.dto.Response
         }
     }
 }
-    

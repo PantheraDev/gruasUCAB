@@ -12,8 +12,8 @@ using OrderMs.Infrastructure.Database;
 namespace OrderMs.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241205224154_ThirthMigration")]
-    partial class ThirthMigration
+    [Migration("20250118192704_FirstMigration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,6 +43,9 @@ namespace OrderMs.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<Guid?>("OrderId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -52,7 +55,13 @@ namespace OrderMs.Infrastructure.Migrations
                     b.Property<decimal>("Value")
                         .HasColumnType("numeric");
 
+                    b.Property<string>("Verified")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("AdditionalCost", (string)null);
                 });
@@ -233,9 +242,6 @@ namespace OrderMs.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("AdditionalCostId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -254,6 +260,9 @@ namespace OrderMs.Infrastructure.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("OriginLocation")
+                        .HasColumnType("text");
 
                     b.Property<Guid>("PolicyId")
                         .HasColumnType("uuid");
@@ -275,8 +284,6 @@ namespace OrderMs.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AdditionalCostId");
 
                     b.HasIndex("IncidentId");
 
@@ -329,6 +336,16 @@ namespace OrderMs.Infrastructure.Migrations
                     b.ToTable("Policy", (string)null);
                 });
 
+            modelBuilder.Entity("OrderMs.Domain.Entities.AdditionalCost", b =>
+                {
+                    b.HasOne("OrderMs.Domain.Entities.Order", "Order")
+                        .WithMany("AdditionalCosts")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("OrderMs.Domain.Entities.InsuredVehicle", b =>
                 {
                     b.HasOne("OrderMs.Domain.Entities.Client", "Client")
@@ -342,10 +359,6 @@ namespace OrderMs.Infrastructure.Migrations
 
             modelBuilder.Entity("OrderMs.Domain.Entities.Order", b =>
                 {
-                    b.HasOne("OrderMs.Domain.Entities.AdditionalCost", "AdditionalCost")
-                        .WithMany()
-                        .HasForeignKey("AdditionalCostId");
-
                     b.HasOne("OrderMs.Domain.Entities.Incident", "Incident")
                         .WithMany()
                         .HasForeignKey("IncidentId")
@@ -357,8 +370,6 @@ namespace OrderMs.Infrastructure.Migrations
                         .HasForeignKey("PolicyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("AdditionalCost");
 
                     b.Navigation("Incident");
 
@@ -382,6 +393,11 @@ namespace OrderMs.Infrastructure.Migrations
                     b.Navigation("Fee");
 
                     b.Navigation("InsuredVehicle");
+                });
+
+            modelBuilder.Entity("OrderMs.Domain.Entities.Order", b =>
+                {
+                    b.Navigation("AdditionalCosts");
                 });
 #pragma warning restore 612, 618
         }

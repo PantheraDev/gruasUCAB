@@ -29,15 +29,22 @@ namespace OrderMs.Application.Commands
         {
             try
             {
-                //TODO: Revisar este validador
+                //* Necesito lo de kevin
+                //TODO: Buscar grua más cercana(Por tipo de grua) y que sea de gruas UCAB principalmente
+
+                //* Se puede hacer
+                //TODO: Calcular costo del viaje
+                //TODO: En caso de cancelar, calcular el costo del trayecto realizado
+
+
                 var validator = new CreateOrderValidator();
                 await validator.ValidateRequest(request.Order);
 
                 //* Se crean los Value Objects
                 var orderId = OrderId.Create();
                 var orderDestinyLocation = OrderDestinyLocation.Create(request.Order.DestinyLocation);
-                var orderTotalCost = OrderTotalCost.Create(request.Order.TotalCost);
-                var orderDate = OrderDate.Create(request.Order.Date.ToUniversalTime());
+                var orderTotalCost = OrderTotalCost.Create(0);
+                var orderDate = OrderDate.Create(DateTime.Now.ToUniversalTime());
                 var orderIncidentId = IncidentId.Create(request.Order.IncidentId);
                 if (await _incidentRepository.ExistsAsync(orderIncidentId!) is false)
                 {
@@ -48,22 +55,21 @@ namespace OrderMs.Application.Commands
                 {
                     throw new PolicyNotFoundException("Policy not found");
                 }
-                //TODO: Revisar este enum
-                var orderState = request.Order.State;
-                var orderAdditionalCostId = request.Order.AdditionalCostId == null ? null : AdditionalCostId.Create(request.Order.AdditionalCostId.Value);
-                if (orderAdditionalCostId is not null && await _additionalCostRepository.ExistsAsync(orderAdditionalCostId!) is false )
-                {
-                    throw new AdditionalCostNotFoundException("Additional cost not found");
-                }
-                var orderTowId = request.Order.TowId == null ? null : TowId.Create(request.Order.TowId.Value);
+                var orderState = OrderState.ToAssign;
+                // var orderAdditionalCostId = request.Order.AdditionalCostId == null ? null : AdditionalCostId.Create(request.Order.AdditionalCostId.Value);
+                // if (orderAdditionalCostId is not null && await _additionalCostRepository.ExistsAsync(orderAdditionalCostId!) is false)
+                // {
+                //     throw new AdditionalCostNotFoundException("Additional cost not found");
+                // }
+                // var orderTowId = request.Order.TowId == null ? null : TowId.Create(request.Order.TowId.Value);
 
-                //* Se crea el Ordere
-                var order = new Order(orderId, orderDestinyLocation, orderTotalCost, orderDate, orderState, orderIncidentId!, orderPolicyId!, orderAdditionalCostId, orderTowId);
+                //* Se crea el Orden
+                var order = new Order(orderId, orderDestinyLocation, orderTotalCost, orderDate, orderState, orderIncidentId!, orderPolicyId!);
 
-                //* Se agrega el Ordere a la BD
+                //* Se agrega el Orden a la BD
                 await _orderRepository.AddAsync(order);
 
-                //* Retorna la id del Ordere
+                //* Retorna la id del Orden
                 return order.Id.Value;
             }
             catch (Exception ex)

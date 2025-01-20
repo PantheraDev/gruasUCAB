@@ -61,7 +61,7 @@ namespace ProviderMs.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminProviderOperatorOnly")]
+        //[Authorize(Policy = "AdminProviderOperatorOnly")]
         [HttpGet]
         public async Task<IActionResult> GetAllTows()
         {
@@ -93,7 +93,7 @@ namespace ProviderMs.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminProviderOperatorOnly")]
+        //[Authorize(Policy = "AdminProviderOperatorOnly")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetVehicle([FromRoute] Guid id)
         {
@@ -192,5 +192,103 @@ namespace ProviderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminProviderOnly")]
+        [HttpPut]
+        [Route("addDriver/{towId}/{driverId}")]
+        public async Task<IActionResult> AddDriver([FromRoute] Guid towId, [FromRoute] Guid driverId)
+        {
+            try
+            {
+                var command = new AddDriverCommand(towId, driverId);
+                var vehicleId = await _mediator.Send(command);
+                return Ok(vehicleId);
+            }
+            catch (VehicleNotFoundException e)
+            {
+                _logger.LogError("An error occurred while trying to create an vehicle: {Message}", e.Message);
+                return StatusCode(404, e.Message);
+            }
+            catch (NullAttributeException e)
+            {
+                _logger.LogError("An error occurred while trying to create an vehicle: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (InvalidAttributeException e)
+            {
+                _logger.LogError("An error occurred while trying to create an vehicle: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("An error occurred while trying to update an vehicle: {Message}", e.Message);
+                return StatusCode(500, "An error occurred while trying to update an vehicle");
+            }
+        }
+
+        [Authorize(Policy = "AdminProviderOnly")]
+        [HttpPut]
+        [Route("quitDriver/{towId}")]
+        public async Task<IActionResult> QuitDriver([FromRoute] Guid towId)
+        {
+            try
+            {
+                var command = new QuitDriverCommand(towId);
+                var vehicleId = await _mediator.Send(command);
+                return Ok(vehicleId);
+            }
+            catch (VehicleNotFoundException e)
+            {
+                _logger.LogError("An error occurred while trying to create an vehicle: {Message}", e.Message);
+                return StatusCode(404, e.Message);
+            }
+            catch (NullAttributeException e)
+            {
+                _logger.LogError("An error occurred while trying to create an vehicle: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (InvalidAttributeException e)
+            {
+                _logger.LogError("An error occurred while trying to create an vehicle: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("An error occurred while trying to update an vehicle: {Message}", e.Message);
+                return StatusCode(500, "An error occurred while trying to update an vehicle");
+            }
+        }
+
+        [Authorize(Policy = "AdminProviderOnly")]
+        [HttpPut]
+        [Route("changeAvailability/{towId}")]
+        public async Task<IActionResult> ChangeAvailabilityDriver([FromRoute] Guid towId)
+        {
+            try
+            {
+                var command = new ChangeAvailabilityCommand(towId);
+                var vehicleId = await _mediator.Send(command);
+                return Ok(vehicleId);
+            }
+            catch (VehicleNotFoundException e)
+            {
+                _logger.LogError("An error occurred while trying to create an vehicle: {Message}", e.Message);
+                return StatusCode(404, e.Message);
+            }
+            catch (NullAttributeException e)
+            {
+                _logger.LogError("An error occurred while trying to create an vehicle: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (InvalidAttributeException e)
+            {
+                _logger.LogError("An error occurred while trying to create an vehicle: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("An error occurred while trying to update an vehicle: {Message}", e.Message);
+                return StatusCode(500, "An error occurred while trying to update an vehicle");
+            }
+        }
     }
 }

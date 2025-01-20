@@ -40,7 +40,7 @@ namespace ProviderMs.Application.Handlers.Queries
                     p.TowAvailability,
                     p.TowType,
                     p.ProviderId.Value,
-                    p.TowDriver.Value,
+                    p.TowDriver?.Value,
                     p.CreatedBy
                 )
             ).ToList();

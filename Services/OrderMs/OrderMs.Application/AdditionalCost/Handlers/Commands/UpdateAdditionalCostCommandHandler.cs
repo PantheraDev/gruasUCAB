@@ -29,11 +29,11 @@ namespace OrderMs.Application.Commands
 
                 if (request.AdditionalCost.Description != null)
                 {
-                    oldAdditionalCost = AdditionalCost.Update(oldAdditionalCost, AdditionalCostDescription.Create(request.AdditionalCost.Description), null);
+                    oldAdditionalCost = AdditionalCost.Update(oldAdditionalCost, AdditionalCostDescription.Create(request.AdditionalCost.Description), null, null);
                 }
                 if (request.AdditionalCost.Value != null)
                 {
-                    oldAdditionalCost = AdditionalCost.Update(oldAdditionalCost, null, AdditionalCostValue.Create(request.AdditionalCost.Value.Value));
+                    oldAdditionalCost = AdditionalCost.Update(oldAdditionalCost, null, AdditionalCostValue.Create(request.AdditionalCost.Value.Value), null);
                 }
 
                 //TODO: Hay que hacer que se guarde el UpdatedBy

@@ -8,7 +8,8 @@ namespace OrderMs.Common.Dtos.Request
     public record CreateAdditionalCostDto
     {
         public decimal Value { get; init; }
-        public string Description { get; init; }
+        public string Description { get; init; } = String.Empty;
+        public Guid OrderId { get; init; }
 
     }
 }

@@ -25,6 +25,14 @@ namespace OrderMs.Infrastructure.Database.Configuration
                         builder.Property(s => s.Description)
                                 .HasConversion(AdditionalCostDescription => AdditionalCostDescription.Value, value => AdditionalCostDescription.Create(value)!)
                                 .IsRequired();
+                        builder.Property(s => s.Verified)
+                                .HasConversion<string>()
+                                .IsRequired();
+                        builder.HasOne(ac => ac.Order) // Un AdditionalCost pertenece a una sola Order
+                                .WithMany(o => o.AdditionalCosts) // Una Order puede tener muchos AdditionalCosts
+                                .HasForeignKey(ac => ac.OrderId) // La clave foránea en AdditionalCost
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired(false); // Si se elimina una Order, se eliminan todos los AdditionalCosts asociados
 
                 }
         }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
+using OrderMs.Core.Services;
 
 namespace OrderMS
 {
@@ -51,31 +52,31 @@ namespace OrderMS
                    return false;
                }));
 
-               o.AddPolicy("AdminDriverOperatorOnly", policy =>
-          policy.RequireAuthenticatedUser()
-                .RequireAssertion(context =>
-                {
-                    var resourceAccess = context.User.FindFirst("resource_access")?.Value;
-                    if (string.IsNullOrEmpty(resourceAccess))
-                        return false;
+                o.AddPolicy("AdminDriverOperatorOnly", policy =>
+           policy.RequireAuthenticatedUser()
+                 .RequireAssertion(context =>
+                 {
+                     var resourceAccess = context.User.FindFirst("resource_access")?.Value;
+                     if (string.IsNullOrEmpty(resourceAccess))
+                         return false;
 
-                    // Parsear el JSON de resource_access
-                    var resourceAccessJson = System.Text.Json.JsonDocument.Parse(resourceAccess);
-                    if (resourceAccessJson.RootElement.TryGetProperty("webclient", out var webClientAccess))
-                    {
-                        var rol = webClientAccess.GetProperty("roles").EnumerateArray()
-                                              .Any(role => role.GetString() == "Administrator" || role.GetString() == "Operator");
-                        return rol;
-                    }
-                    else if (resourceAccessJson.RootElement.TryGetProperty("mobileclient", out var mobileClientAccess))
-                    {
-                        var rol = mobileClientAccess.GetProperty("roles").EnumerateArray()
-                                              .Any(role => role.GetString() == "Driver");
-                        return rol;
-                    }
+                     // Parsear el JSON de resource_access
+                     var resourceAccessJson = System.Text.Json.JsonDocument.Parse(resourceAccess);
+                     if (resourceAccessJson.RootElement.TryGetProperty("webclient", out var webClientAccess))
+                     {
+                         var rol = webClientAccess.GetProperty("roles").EnumerateArray()
+                                               .Any(role => role.GetString() == "Administrator" || role.GetString() == "Operator");
+                         return rol;
+                     }
+                     else if (resourceAccessJson.RootElement.TryGetProperty("mobileclient", out var mobileClientAccess))
+                     {
+                         var rol = mobileClientAccess.GetProperty("roles").EnumerateArray()
+                                               .Any(role => role.GetString() == "Driver");
+                         return rol;
+                     }
 
-                    return false;
-                }));
+                     return false;
+                 }));
 
                 o.AddPolicy("AdminOperatorOnly", policy =>
           policy.RequireAuthenticatedUser()
@@ -102,7 +103,7 @@ namespace OrderMS
 
             });
             services.AddHttpContextAccessor();
-
+            services.AddHttpClient<IProviderService>();
 
             return services;
         }

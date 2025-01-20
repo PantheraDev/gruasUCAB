@@ -28,7 +28,7 @@ namespace OrderMs.Application.Handlers.Queries
             var Order = await _OrderRepository.GetByIdAsync(orderId!);
 
             if (Order == null || Order.IsDeleted) throw new OrderNotFoundException("Order not found");
-
+            Console.WriteLine(Order.AdditionalCosts.Count);
             return new GetOrderDto(
                     Order.Id.Value,
                     Order.CreatedBy,
@@ -38,8 +38,8 @@ namespace OrderMs.Application.Handlers.Queries
                     Order.State,
                     Order.IncidentId.Value,
                     Order.PolicyId.Value,
-                    Order.AdditionalCostId?.Value,
-                    Order.TowId?.Value
+                    Order.TowId?.Value,
+                    Order.AdditionalCosts.Select(x => new GetAdditionalCostDto(x.Id.Value, x.CreatedBy, x.Value.Value, x.Description.Value, x.OrderId.Value, (x.Verified == 0) ? "Verificado" : "NoVerificado")).ToList()!
                 );
         }
     }

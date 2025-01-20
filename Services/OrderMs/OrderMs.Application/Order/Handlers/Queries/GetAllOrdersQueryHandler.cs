@@ -21,7 +21,7 @@ namespace OrderMs.Application.Handlers.Queries
 
             if (Order == null) throw new OrderNotFoundException("Orders are empty");
 
-            
+
             return Order.Where(c => !c.IsDeleted).Select(c =>
                 new GetOrderDto(
                     c.Id.Value,
@@ -32,8 +32,8 @@ namespace OrderMs.Application.Handlers.Queries
                     c.State,
                     c.IncidentId.Value,
                     c.PolicyId.Value,
-                    c.AdditionalCostId?.Value,
-                    c.TowId?.Value
+                    c.TowId?.Value,
+                    c.AdditionalCosts.Select(x => new GetAdditionalCostDto(x.Id.Value, x.CreatedBy, x.Value.Value, x.Description.Value, x.OrderId.Value,(x.Verified == 0) ? "Verificado" : "NoVerificado")).ToList()!
                 )
             ).ToList();
         }

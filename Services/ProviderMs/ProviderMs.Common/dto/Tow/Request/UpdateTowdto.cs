@@ -11,6 +11,6 @@ namespace ProviderMs.Common.dto.Request
         public string? TowAvailability {get; init;}
         public string? TowType {get; init;}
         public Guid ProviderId {get; init;}
-        public Guid TowDriver {get; init;}
+        //public Guid TowDriver {get; init;}
     }
 }

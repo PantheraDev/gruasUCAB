@@ -65,10 +65,10 @@ namespace ProviderMs.Application.Command
                 {
                     oldTow = Tow.Update(oldTow, null,null,null,null,null,null,null,null,ProviderId.Create(request.Tow.ProviderId),null);
                 }
-                if(request.Tow.TowDriver != null)
-                {
-                    oldTow = Tow.Update(oldTow, null,null,null,null,null,null,null,null,null,TowDriver.Create(request.Tow.TowDriver));
-                }
+                // if(request.Tow.TowDriver != null)
+                // {
+                //     oldTow = Tow.Update(oldTow, null,null,null,null,null,null,null,null,null,TowDriver.Create(request.Tow.TowDriver));
+                // }
 
                 //TODO: Hay que hacer que se guarde el UpdatedBy
 

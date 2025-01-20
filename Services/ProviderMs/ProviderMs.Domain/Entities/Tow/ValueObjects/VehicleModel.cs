@@ -9,7 +9,7 @@ namespace ProviderMs.Domain.ValueObjects
 {
     public partial class VehicleModel
     {
-        private const string Pattern = @"^[a-zA-Z]+$";
+        private const string Pattern = @"^[a-zA-Z0-9]+$";
         private VehicleModel(string value) => Value = value;
 
         public static VehicleModel Create(string value)

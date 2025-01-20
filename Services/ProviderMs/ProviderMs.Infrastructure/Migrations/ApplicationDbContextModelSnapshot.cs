@@ -168,7 +168,7 @@ namespace ProviderMs.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("TowDriver")
+                    b.Property<Guid?>("TowDriver")
                         .HasColumnType("uuid");
 
                     b.Property<string>("TowLocation")

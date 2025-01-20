@@ -13,7 +13,7 @@ namespace OrderMs.Controllers
 {
     [ApiController]
     [Route("order/additional-cost")]
-    [Authorize(Policy = "AdminDriverOperatorOnly")]
+
     public class AdditionalCostController : ControllerBase
     {
         private readonly ILogger<AdditionalCostController> _logger;
@@ -25,6 +25,7 @@ namespace OrderMs.Controllers
             _mediator = mediator;
         }
 
+        [Authorize(Policy = "AdminDriverOperatorOnly")]
         [HttpPost]
         public async Task<IActionResult> CreateAdditionalCost([FromBody] CreateAdditionalCostDto createAdditionalCostDto)
         {
@@ -123,6 +124,7 @@ namespace OrderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminDriverOperatorOnly")]
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> UpdateAdditionalCost([FromRoute] Guid id, [FromBody] UpdateAdditionalCostDto updateAdditionalCostDto)
@@ -155,6 +157,7 @@ namespace OrderMs.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminDriverOperatorOnly")]
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> DeleteAdditionalCost([FromRoute] Guid id)
@@ -185,6 +188,39 @@ namespace OrderMs.Controllers
                 //TODO: Colocar validaciones HTTP
                 _logger.LogError("An error occurred while trying to delete an AdditionalCost: {Message}", e.Message);
                 return StatusCode(500, "An error occurred while trying to delete an AdditionalCost");
+            }
+        }
+        
+        [Authorize(Policy = "AdminDriverOperatorOnly")]
+        [HttpPut]
+        [Route("verify/{id}")]
+        public async Task<IActionResult> VerifyAdditionalCost([FromRoute] Guid id)
+        {
+            try
+            {
+                var command = new VerifyAdditionalCostCommand(id);
+                var AdditionalCostId = await _mediator.Send(command);
+                return Ok(AdditionalCostId);
+            }
+            catch (AdditionalCostNotFoundException e)
+            {
+                _logger.LogError("An error occurred while trying to create an AdditionalCost: {Message}", e.Message);
+                return StatusCode(404, e.Message);
+            }
+            catch (NullAttributeException e)
+            {
+                _logger.LogError("An error occurred while trying to create an AdditionalCost: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (InvalidAttributeException e)
+            {
+                _logger.LogError("An error occurred while trying to create an AdditionalCost: {Message}", e.Message);
+                return StatusCode(400, e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("An error occurred while trying to update an AdditionalCost: {Message}", e.Message);
+                return StatusCode(500, "An error occurred while trying to update an AdditionalCost");
             }
         }
 

@@ -33,10 +33,7 @@ namespace AuthenticationMs
 
             services.AddAuthorization(o =>
             {
-                // o.DefaultPolicy = new AuthorizationPolicyBuilder()
-                //     .RequireAuthenticatedUser()
-                //     .RequireClaim("email_verified", "true")
-                //     .Build();
+
 
                 o.AddPolicy("AdminProviderOnly", policy =>
          policy.RequireAuthenticatedUser()
@@ -78,62 +75,7 @@ namespace AuthenticationMs
                     return false;
                 }));
 
-                //         o.AddPolicy("ProviderOnly", policy =>
-                //   policy.RequireAuthenticatedUser()
-                //         .RequireAssertion(context =>
-                //         {
-                //             var resourceAccess = context.User.FindFirst("resource_access")?.Value;
-                //             if (string.IsNullOrEmpty(resourceAccess))
-                //                 return false;
 
-                //             // Parsear el JSON de resource_access
-                //             var resourceAccessJson = System.Text.Json.JsonDocument.Parse(resourceAccess);
-                //             if (resourceAccessJson.RootElement.TryGetProperty("webclient", out var webClientAccess))
-                //             {
-                //                 return webClientAccess.GetProperty("roles").EnumerateArray()
-                //                                       .Any(role => role.GetString() == "Provider");
-                //             }
-
-                //             return false;
-                //         }));
-
-                // o.AddPolicy("OperatorOnly", policy =>
-                // policy.RequireAuthenticatedUser()
-                // .RequireAssertion(context =>
-                // {
-                //     var resourceAccess = context.User.FindFirst("resource_access")?.Value;
-                //     if (string.IsNullOrEmpty(resourceAccess))
-                //         return false;
-
-                //     // Parsear el JSON de resource_access
-                //     var resourceAccessJson = System.Text.Json.JsonDocument.Parse(resourceAccess);
-                //     if (resourceAccessJson.RootElement.TryGetProperty("webclient", out var webClientAccess))
-                //     {
-                //         return webClientAccess.GetProperty("roles").EnumerateArray()
-                //                               .Any(role => role.GetString() == "Operator");
-                //     }
-
-                //     return false;
-                // }));
-
-                // o.AddPolicy("DriverOnly", policy =>
-                //     policy.RequireAuthenticatedUser()
-                //           .RequireAssertion(context =>
-                //           {
-                //               var resourceAccess = context.User.FindFirst("resource_access")?.Value;
-                //               if (string.IsNullOrEmpty(resourceAccess))
-                //                   return false;
-
-                //               // Parsear el JSON de resource_access
-                //               var resourceAccessJson = System.Text.Json.JsonDocument.Parse(resourceAccess);
-                //               if (resourceAccessJson.RootElement.TryGetProperty("webclient", out var webClientAccess))
-                //               {
-                //                   return webClientAccess.GetProperty("roles").EnumerateArray()
-                //                                         .Any(role => role.GetString() == "Driver");
-                //               }
-
-                //               return false;
-                //           }));
             });
 
             // Agrega IHttpContextAccessor (necesario para acceder al contexto HTTP)

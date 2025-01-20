@@ -22,16 +22,43 @@ namespace OrderMs.Infrastructure.Repositories
             await _dbContext.SaveEfContextChanges("");
         }
 
+        public async Task<List<AdditionalCost>?> FindAdditionalCosts(OrderId id)
+        {
+            var addCost = await _dbContext.AdditionalCosts.Where(x => x.OrderId == id && !x.IsDeleted).ToListAsync();
+            return addCost;
+        }
+
         public async Task<Order?> GetByIdAsync(OrderId id)
         {
             var order = await _dbContext.Orders.FirstOrDefaultAsync(x => x.Id == id);
-            //TODO: Borrar todos los console
-            Console.WriteLine("This is the Order:" + order);
+            var addCosts = await FindAdditionalCosts(id);
+            if (addCosts != null)
+            {
+                foreach (var addCost in addCosts)
+                {
+                    order?.AddAdditionalCost(addCost!);
+                }
+            }
             return order;
         }
+
         public async Task<List<Order>?> GetAllAsync()
         {
             var orders = await _dbContext.Orders.ToListAsync();
+            
+            foreach (var order in orders)
+            {
+                
+                var addCosts = await FindAdditionalCosts(order.Id);
+                if (addCosts != null)
+                {
+                    foreach (var addCost in addCosts)
+                    {
+                        order.AddAdditionalCost(addCost!);
+                    }
+                }
+                Console.WriteLine(order.AdditionalCosts.Count);
+            }
             return orders;
         }
 

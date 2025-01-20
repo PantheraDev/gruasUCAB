@@ -33,7 +33,9 @@ namespace OrderMs.Application.Handlers.Queries
                     additionalCost.Id.Value,
                     additionalCost.CreatedBy,
                     additionalCost.Value.Value,
-                    additionalCost.Description.Value
+                    additionalCost.Description.Value,
+                    additionalCost.OrderId.Value,
+                    (additionalCost.Verified == 0) ? "Verificado" : "NoVerificado"
                 );
         }
     }
