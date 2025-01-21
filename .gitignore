@@ -54,6 +54,7 @@ project.lock.json
 project.fragment.lock.json
 artifacts/
 
+
 *_i.c
 *_p.c
 *_i.h
@@ -555,6 +556,10 @@ FodyWeavers.xsd
 
 # VS Code files for those working on multiple tools
 *.code-workspace
+
+# Firebase Admin SDK JSON file
+*notification-27cdc-firebase-adminsdk-6lhrr-52ff625b29.json
+
 
 # Local History for Visual Studio Code
 

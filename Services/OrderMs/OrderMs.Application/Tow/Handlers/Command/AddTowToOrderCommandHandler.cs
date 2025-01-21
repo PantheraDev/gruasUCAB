@@ -17,10 +17,12 @@ namespace OrderMs.Application.Tow.Handlers.Command
     {
         public readonly IOrderRepository _orderRepository;
         public readonly IProviderService _providerService;
-        public AddTowToOrderCommandHandler(IOrderRepository orderRepository, IProviderService providerService)
+        public readonly INotificationRepository _notificationService;
+        public AddTowToOrderCommandHandler(IOrderRepository orderRepository, IProviderService providerService, INotificationRepository notificationService)
         {
             _orderRepository = orderRepository;
             _providerService = providerService;
+            _notificationService = notificationService;
         }
 
         public async Task<Guid> Handle(AddTowToOrderCommand request, CancellationToken cancellationToken)
@@ -33,11 +35,17 @@ namespace OrderMs.Application.Tow.Handlers.Command
                 var order = await _orderRepository.GetByIdAsync(OrderId.Create(request.OrderId)!);
                 if (order == null) throw new OrderNotFoundException($"Order with id {request.OrderId} not found");
 
-                order = Order.Update(order,null,null,null,null,null,null,null,null,OrderOriginLocation.Create(tow.towLocation));
-                order = Order.Update(order,null,null,null,null,null,null,null,TowId.Create(request.TowId),null);
-                order = Order.Update(order,null,null,null,OrderState.Accepted,null,null,null,null,null);
+                if (order.State != OrderState.ToAssign) throw new OrderStateException("Order is not in state ToAssign");
+                if (tow.towDriver == null) throw new InvalidAttributeException("Tow does not have a driver assigned");
+
+                order = Order.Update(order, null, null, null, null, null, null, null, null, OrderOriginLocation.Create(tow.towLocation));
+                order = Order.Update(order, null, null, null, null, null, null, null, TowId.Create(request.TowId), null);
+                order = Order.Update(order, null, null, null, OrderState.Accepted, null, null, null, null, null);
 
                 await _orderRepository.UpdateAsync(order);
+
+                await _notificationService.SendNotificationAsync(Guid.Parse(tow.towDriver));
+
                 return order.Id.Value;
             }
             catch

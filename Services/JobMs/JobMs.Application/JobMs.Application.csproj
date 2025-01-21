@@ -6,4 +6,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FirebaseAdmin" Version="3.1.0" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JobMs.Common\JobMs.Common.csproj" />
+    <ProjectReference Include="..\JobMs.Core\JobMs.Core.csproj" />
+    <ProjectReference Include="..\JobMs.Domain\JobMs.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
