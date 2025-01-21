@@ -258,7 +258,7 @@ namespace ProviderMs.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminProviderOnly")]
+        //[Authorize(Policy = "AdminProviderOnly")]
         [HttpPut]
         [Route("changeAvailability/{towId}")]
         public async Task<IActionResult> ChangeAvailabilityDriver([FromRoute] Guid towId)

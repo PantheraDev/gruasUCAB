@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OrderMs.Infrastructure
+namespace ProviderMs.Infrastructure
 {
     public class HttpClientUrl
     {

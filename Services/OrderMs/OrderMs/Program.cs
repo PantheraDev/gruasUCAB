@@ -17,6 +17,9 @@ builder.Services.AddPresentation(builder.Configuration)
     .AddInfrastructure(builder.Configuration)
     .AddApplication();
 
+builder.Services.Configure<HttpClientUrl>(
+    builder.Configuration.GetSection("HttpClientAddress"));
+
 //* Para que funcione el frontend
 builder.Services.AddCors(options =>
 {
@@ -42,6 +45,8 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.MapGet("/", () => "Connected!");
 
 app.UseCors("AllowAll");
 

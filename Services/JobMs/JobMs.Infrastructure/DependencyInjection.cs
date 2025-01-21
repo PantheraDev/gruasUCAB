@@ -24,7 +24,7 @@ namespace JobMs.Infrastructure
         {
 
             var BusinessConnectionString = Environment.GetEnvironmentVariable("DB_BUSINESS_CONNECTION_STRING")??
-                configuration.GetConnectionString("BusinessPostgresSQLConnection");
+                configuration.GetConnectionString("PostgresSQLConnection");
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(BusinessConnectionString));
             //services.AddDbContext<ApplicationDbContext>(options =>

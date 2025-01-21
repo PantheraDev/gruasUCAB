@@ -24,7 +24,7 @@ namespace ProviderMs.Infrastructure
         private static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
             var BusinessConnectionString = Environment.GetEnvironmentVariable("DB_BUSINESS_CONNECTION_STRING") ??
-            configuration.GetConnectionString("BusinessPostgreSQLConnection");
+            configuration.GetConnectionString("PostgresSQLConnection");
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(BusinessConnectionString));

@@ -12,7 +12,7 @@ using UserMs.Infrastructure.Database;
 namespace UserMs.Infrastructure.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20250109023900_FirstMigration")]
+    [Migration("20250121161953_FirstMigration")]
     partial class FirstMigration
     {
         /// <inheritdoc />
