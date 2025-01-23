@@ -58,5 +58,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGet("/", () => "Connected!");
 
 app.Run();

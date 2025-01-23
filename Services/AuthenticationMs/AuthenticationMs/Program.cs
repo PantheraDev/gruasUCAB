@@ -32,16 +32,13 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.MapGet("users/me", (ClaimsPrincipal user) =>
-{
-    return user.Claims.ToDictionary(c => c.Type, c => c.Value);
-}).RequireAuthorization();
+app.MapGet("/", () => "Connected!");
 
 app.UseCors("AllowAll");
 app.UseRouting();

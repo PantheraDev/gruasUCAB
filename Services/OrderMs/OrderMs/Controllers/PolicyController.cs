@@ -94,7 +94,7 @@ namespace OrderMs.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOperatorOnly")]
+        //[Authorize(Policy = "AdminOperatorOnly")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPolicy([FromRoute] Guid id)
         {

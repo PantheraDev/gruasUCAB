@@ -25,7 +25,7 @@ namespace OrderMs.Controllers
             _mediator = mediator;
         }
 
-        [Authorize(Policy = "AdminDriverOperatorOnly")]
+        //[Authorize(Policy = "AdminDriverOperatorOnly")]
         [HttpPost]
         public async Task<IActionResult> CreateAdditionalCost([FromBody] CreateAdditionalCostDto createAdditionalCostDto)
         {

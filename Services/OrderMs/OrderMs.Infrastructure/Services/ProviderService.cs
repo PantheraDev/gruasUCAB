@@ -2,6 +2,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using Microsoft.Extensions.Options;
 using OrderMs.Common.Dto.Response;
 using OrderMs.Common.Dtos.Provider;
 using OrderMs.Core.Services;
@@ -13,14 +14,16 @@ namespace OrderMs.Infrastructure.Services
     {
         private readonly HttpClient _httpClient;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly string _httpClientUrl;
 
-        public ProviderService(IHttpContextAccessor httpContextAccessor, HttpClient httpClient)
+        public ProviderService(IHttpContextAccessor httpContextAccessor, HttpClient httpClient, IOptions<HttpClientUrl> httpClientUrl)
         {
             _httpContextAccessor = httpContextAccessor;
             _httpClient = httpClient;
+            _httpClientUrl = httpClientUrl.Value.ApiUrl;
             //* Configuracion del HttpClient
             var headerToken = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString()?.Replace("Bearer ", "");
-            _httpClient.BaseAddress = new Uri("http://localhost:18083/");
+            _httpClient.BaseAddress = new Uri(_httpClientUrl);
             _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {headerToken}");
         }
 

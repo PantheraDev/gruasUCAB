@@ -73,10 +73,11 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.Converters.Add(new UserProviderJsonConverter());
     options.JsonSerializerOptions.Converters.Add(new UserDepartamentJsonConverter());
 });
+
 //**********************************************************************************
 
 var BusinessConnectionString = Environment.GetEnvironmentVariable("DB_BUSINESS_CONNECTION_STRING") ??
-    builder.Configuration.GetConnectionString("BusinessPostgreSQLConnection");
+    builder.Configuration.GetConnectionString("PostgresSQLConnection");
 
 builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseNpgsql(BusinessConnectionString));
@@ -92,6 +93,8 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.MapGet("/", () => "Connected!");
 
 app.UseHttpsRedirection();
 app.UseRouting();

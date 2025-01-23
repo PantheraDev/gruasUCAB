@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace UserMs.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class FeatureUser : Migration
+    public partial class FirstMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,7 +34,6 @@ namespace UserMs.Infrastructure.Migrations
                     UserEmail = table.Column<string>(type: "text", nullable: false),
                     UserPassword = table.Column<string>(type: "text", nullable: false),
                     UserDelete = table.Column<bool>(type: "boolean", nullable: true, defaultValueSql: "false"),
-                    UserProvider = table.Column<Guid>(type: "uuid", nullable: false),
                     UserDepartament = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
@@ -56,7 +55,6 @@ namespace UserMs.Infrastructure.Migrations
                     UserEmail = table.Column<string>(type: "text", nullable: false),
                     UserPassword = table.Column<string>(type: "text", nullable: false),
                     UserDelete = table.Column<bool>(type: "boolean", nullable: true, defaultValueSql: "false"),
-                    UserProvider = table.Column<Guid>(type: "uuid", nullable: false),
                     UserDepartament = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),

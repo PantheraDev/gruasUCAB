@@ -12,7 +12,7 @@ using OrderMs.Infrastructure.Database;
 namespace OrderMs.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250118192704_FirstMigration")]
+    [Migration("20250121161240_FirstMigration")]
     partial class FirstMigration
     {
         /// <inheritdoc />

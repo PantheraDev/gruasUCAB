@@ -36,6 +36,9 @@ var appSettingsSection = builder.Configuration.GetSection("AppSettings");
 _appSettings = appSettingsSection.Get<AppSettings>();
 builder.Services.Configure<AppSettings>(appSettingsSection);
 
+builder.Services.Configure<HttpClientUrl>(
+    builder.Configuration.GetSection("HttpClientAddress"));
+
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient<IUserService, UserService>();
 
@@ -47,6 +50,8 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.MapGet("/", () => "Connected!");
 
 app.UseHttpsRedirection();
 

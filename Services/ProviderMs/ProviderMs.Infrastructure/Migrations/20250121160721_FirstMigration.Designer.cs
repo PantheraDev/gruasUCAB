@@ -12,7 +12,7 @@ using ProviderMs.Infrastructure.Database;
 namespace ProviderMs.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250113142157_FirstMigration")]
+    [Migration("20250121160721_FirstMigration")]
     partial class FirstMigration
     {
         /// <inheritdoc />
